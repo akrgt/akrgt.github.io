@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: https://ogp.me/ns#"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>後藤 晶 — Akira Goto | BEER Lab・明治大学 情報コミュニケーション学部</title>
+<meta name="description" content="後藤 晶（明治大学 情報コミュニケーション学部 専任准教授）。専門は行動経済学・実験社会科学・計算社会科学。協力行動・信頼・ナッジ・人間とAIに関する実証研究を行っています。">
+<meta name="author" content="Akira Goto / 後藤 晶">
+<link rel="alternate" hreflang="ja" href="https://akrgt.github.io/">
+<link rel="alternate" hreflang="en" href="https://akrgt.github.io/en/">
+<link rel="alternate" hreflang="x-default" href="https://akrgt.github.io/">
+<link rel="canonical" href="https://akrgt.github.io/">
+
+<!-- OGP -->
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://akrgt.github.io/">
+<meta property="og:title" content="後藤 晶 — Akira Goto">
+<meta property="og:description" content="明治大学 情報コミュニケーション学部 専任准教授。行動経済学・実験社会科学・計算社会科学。">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://akrgt.github.io/assets/og-image.png">
+<meta property="profile:first_name" content="Akira">
+<meta property="profile:last_name" content="Goto">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="後藤 晶 — Akira Goto">
+<meta name="twitter:description" content="明治大学 情報コミュニケーション学部 専任准教授。行動経済学・実験社会科学。">
+<meta name="twitter:image" content="https://akrgt.github.io/assets/og-image.png">
+
+<!-- Favicon (inline SVG) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'&gt;&lt;rect width='64' height='64' rx='10' fill='%238b3a2e'/&gt;&lt;text x='32' y='44' font-family='serif' font-size='38' font-weight='800' text-anchor='middle' fill='%23fbf9f4'&gt;後&lt;/text&gt;&lt;/svg&gt;">
+<link rel="stylesheet" href="assets/fonts.css">
+<style></style>
+
+<style>  :root {
+    --bg: #f4f1ea;
+    --bg-2: #ebe6db;
+    --paper: #fbf9f4;
+    --ink: #1c1a17;
+    --ink-2: #3a3631;
+    --muted: #76706a;
+    --rule: #d9d2c4;
+    --accent: #8b3a2e;          /* iron-oxide red */
+    --accent-soft: #c98a7a;
+    --serif: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    --sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --latin: "Inter", "Noto Sans JP", sans-serif;
+  }
+  html.dark {
+    --bg: #14130f;
+    --bg-2: #1c1a16;
+    --paper: #1a1814;
+    --ink: #f1ece1;
+    --ink-2: #cdc5b6;
+    --muted: #8b8478;
+    --rule: #2e2a23;
+    --accent: #d97a66;
+    --accent-soft: #b86d5b;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  /* Visible focus for keyboard users */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-feature-settings: "palt";
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--accent); color: var(--paper); }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 30;
+    backdrop-filter: blur(10px);
+    background: color-mix(in oklab, var(--bg) 80%, transparent);
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-inner {
+    max-width: 1320px; margin: 0 auto;
+    padding: 14px 32px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .brand {
+    display: flex; align-items: baseline; gap: 12px;
+    font-family: var(--serif); font-weight: 700;
+  }
+  .brand .ja { font-size: 17px; letter-spacing: 0.08em; }
+  .brand .en { font-family: var(--latin); font-size: 11px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
+  .top-nav {
+    margin-left: auto;
+    display: flex; gap: 22px;
+    font-family: var(--latin);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .top-nav a { transition: color .2s; }
+  .top-nav a:hover { color: var(--accent); }
+  .top-nav a.active { color: var(--ink); }
+  .lang-toggle {
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: var(--latin); font-size: 11px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    color: var(--muted);
+    background: transparent;
+  }
+  .lang-toggle:hover { color: var(--ink); border-color: var(--ink-2); }
+  a.lang-toggle { display: inline-block; line-height: 1.4; text-decoration: none; }
+  a:hover { color: var(--accent); }
+
+  /* ---------- layout ---------- */
+  main { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 96px 0; border-top: 1px solid var(--rule); }
+  section:first-of-type { border-top: 0; }
+  .section-head {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+    align-items: baseline;
+  }
+  .section-num {
+    font-family: var(--latin);
+    font-size: 11px; letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .section-num::before {
+    content: "";
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.2;
+    margin: 0 0 8px 0;
+    letter-spacing: 0.01em;
+  }
+  .section-title .en {
+    display: block;
+    font-family: var(--latin);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: 6px;
+  }
+  .section-body { /* nothing */ }
+
+  /* ---------- hero ---------- */
+  .hero {
+    padding: 80px 0 96px;
+    border-top: 0;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+    align-items: end;
+  }
+  .hero-eyebrow {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    display: flex; gap: 14px; align-items: center;
+  }
+  .hero-eyebrow .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .hero-name-ja {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(64px, 9vw, 132px);
+    line-height: 0.95;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+  .hero-name-en {
+    font-family: var(--latin);
+    font-weight: 300;
+    font-size: clamp(20px, 2vw, 28px);
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    margin-top: 18px;
+    text-transform: uppercase;
+  }
+  .hero-tags {
+    margin-top: 36px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .tag {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 6px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink-2);
+  }
+  .tag.solid {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .hero-side {
+    border-left: 1px solid var(--rule);
+    padding-left: 40px;
+    padding-bottom: 12px;
+  }
+  .hero-side .label {
+    font-family: var(--latin);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .hero-side .value {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+  .hero-side .value small {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  /* monogram (replaces portrait) */
+  .monogram {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    position: relative;
+    margin-bottom: 28px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .monogram::before {
+    content: "";
+    position: absolute; inset: 14px;
+    border: 1px solid var(--rule);
+  }
+  .monogram .mg-kanji {
+    font-family: var(--sans);
+    font-weight: 900;
+    font-size: clamp(96px, 14vw, 180px);
+    line-height: 0.9;
+    color: var(--ink);
+    letter-spacing: -0.04em;
+    z-index: 1;
+    position: relative;
+  }
+  .monogram .mg-kanji .accent { color: var(--accent); }
+  .monogram .mg-corner {
+    position: absolute;
+    font-family: var(--latin);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .monogram .mg-corner.tl { top: 22px; left: 22px; }
+  .monogram .mg-corner.br { bottom: 22px; right: 22px; }
+
+  /* portrait placeholder (kept for legacy) */
+  .portrait {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        var(--bg-2) 0px,
+        var(--bg-2) 8px,
+        var(--paper) 8px,
+        var(--paper) 16px
+      );
+    border: 1px solid var(--rule);
+    position: relative;
+    margin-bottom: 28px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .portrait::after {
+    content: "";
+    position: absolute; inset: 18px;
+    border: 1px dashed var(--rule);
+  }
+  .portrait .ph-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    background: var(--paper);
+    padding: 4px 8px;
+    border: 1px solid var(--rule);
+    z-index: 1;
+  }
+
+  /* ---------- about / lede ---------- */
+  .lede {
+    max-width: 760px;
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.85;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+  .lede p + p { margin-top: 1.2em; }
+  .lede em { font-style: normal; color: var(--accent); }
+
+  .pull-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 56px;
+  }
+  .pull {
+    background: var(--bg);
+    padding: 28px 24px;
+  }
+  .pull .num {
+    font-family: var(--latin);
+    font-weight: 300;
+    font-size: 48px;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .pull .lab {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+  .pull .sub {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-2);
+    margin-top: 4px;
+  }
+
+  /* ---------- research ---------- */
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .r-card {
+    background: var(--bg);
+    padding: 36px 32px;
+    transition: background .25s;
+    cursor: default;
+  }
+  .r-card:hover { background: var(--paper); }
+  .r-card .ix {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .r-card h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    margin: 0 0 10px;
+    line-height: 1.45;
+    font-weight: 700;
+  }
+  .r-card .en-sub {
+    font-family: var(--latin);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .r-card p {
+    font-size: 14px; line-height: 1.85;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .r-card .keywords {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 20px;
+  }
+  .r-card .keywords span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 3px 8px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+
+  /* ---------- timeline ---------- */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 5px; top: 6px; bottom: 6px;
+    width: 1px;
+    background: var(--rule);
+  }
+  .t-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 14px 0;
+    position: relative;
+  }
+  .t-item::before {
+    content: "";
+    position: absolute;
+    left: -32px; top: 22px;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--ink-2);
+  }
+  .t-item.current::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 20%, transparent);
+  }
+  .t-when {
+    font-family: var(--latin);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding-top: 4px;
+  }
+  .t-what {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.55;
+  }
+  .t-what small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  /* ---------- pubs ---------- */
+  .pubs-toolbar {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 32px;
+    padding: 16px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+  }
+  .filter-btn {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all .2s;
+  }
+  .filter-btn:hover { border-color: var(--ink-2); }
+  .filter-btn.on {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .filter-btn .count {
+    font-size: 10px;
+    margin-left: 6px;
+    color: var(--muted);
+  }
+  .filter-btn.on .count { color: color-mix(in oklab, var(--bg) 70%, transparent); }
+
+  .pub-list {
+    border-top: 1px solid var(--rule);
+  }
+  .pub {
+    display: grid;
+    grid-template-columns: 80px 1fr 220px;
+    gap: 24px;
+    padding: 22px 4px;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    transition: background .2s;
+  }
+  .pub:hover { background: var(--paper); }
+  .pub .yr {
+    font-family: var(--latin);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .pub .ttl {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+  .pub .ttl .authors {
+    display: block;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 4px;
+  }
+  .pub .meta {
+    font-family: var(--latin);
+    font-size: 12px;
+    color: var(--ink-2);
+    text-align: right;
+    line-height: 1.5;
+  }
+  .pub .meta .venue {
+    display: block;
+    font-style: italic;
+  }
+  .pub .meta .badges {
+    display: inline-flex; gap: 6px; margin-top: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .badge {
+    font-family: var(--latin);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    background: var(--bg-2);
+    color: var(--ink-2);
+  }
+  .badge.peer { background: var(--accent); color: var(--paper); }
+  .badge.invited { border: 1px solid var(--accent); color: var(--accent); background: transparent; }
+  .badge.first { border: 1px solid var(--rule); color: var(--muted); background: transparent; }
+
+  /* ---------- presentations ---------- */
+  .pres-list {
+    border-top: 1px solid var(--rule);
+  }
+  .pres {
+    display: grid;
+    grid-template-columns: 110px 1fr 90px;
+    gap: 24px;
+    padding: 18px 4px;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    transition: background .2s;
+  }
+  .pres:hover { background: var(--paper); }
+  .pres-date {
+    font-family: var(--latin);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .pres-title {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+  .pres-star {
+    color: var(--accent);
+    margin-left: 6px;
+    font-size: 12px;
+  }
+  .pres-authors {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-2);
+    margin-top: 4px;
+  }
+  .pres-venue {
+    font-family: var(--latin);
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+  .pres-venue .dot-sep { margin: 0 8px; opacity: 0.5; }
+  .pres-place { font-style: italic; }
+  .pres-meta {
+    text-align: right;
+  }
+  .pres-more {
+    margin-top: 24px;
+    text-align: center;
+  }
+  .more-btn {
+    font-family: var(--latin);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .more-btn:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .pres-footnote {
+    margin-top: 24px;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    text-align: center;
+    padding: 16px;
+    border: 1px dotted var(--rule);
+  }
+  .pres-footnote a {
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+  }
+  @media (max-width: 960px) {
+    .pres { grid-template-columns: 1fr; gap: 4px; }
+    .pres-meta { text-align: left; margin-top: 4px; }
+  }
+
+  /* ---------- books ---------- */
+  .book-list {
+    border-top: 1px solid var(--rule);
+  }
+  .book-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 180px;
+    gap: 24px;
+    padding: 22px 4px;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    transition: background .2s;
+  }
+  .book-row:hover { background: var(--paper); }
+  .book-row .b-yr {
+    font-family: var(--latin);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .book-row .b-name {
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+  .book-row .b-sub {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .book-support-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+  }
+  .book-row .b-meta {
+    text-align: right;
+    font-family: var(--latin);
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .book-row .b-pub { display: block; font-style: italic; }
+  .book-row .b-kind {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 2px 7px;
+  }
+  @media (max-width: 960px) {
+    .book-row { grid-template-columns: 60px 1fr; }
+    .book-row .b-meta { grid-column: 2; text-align: left; }
+  }
+
+  /* ---------- awards ---------- */
+  .awards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .award {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .award:nth-child(odd) { padding-right: 32px; border-right: 1px solid var(--rule); }
+  .award:nth-child(even) { padding-left: 32px; }
+  .award .a-yr {
+    font-family: var(--latin);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .award .a-ttl {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .award .a-ttl small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 4px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ---------- teaching / projects ---------- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+  .col-h {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .course-list, .org-list {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .course-list li, .org-list li {
+    padding: 12px 0;
+    border-bottom: 1px dotted var(--rule);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .course-list li .name {
+    font-family: var(--serif);
+    font-size: 16px;
+  }
+  .course-list li .where, .org-list li .yr {
+    font-family: var(--latin);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .org-list li .role {
+    font-family: var(--serif);
+    font-size: 15px;
+  }
+  .org-list li .org {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* projects */
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .proj {
+    background: var(--bg);
+    padding: 26px 24px;
+  }
+  .proj .p-when {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .proj h4 {
+    font-family: var(--serif);
+    font-size: 17px;
+    margin: 0 0 8px;
+    line-height: 1.45;
+    font-weight: 700;
+    text-wrap: pretty;
+  }
+  .proj .p-funder {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .proj .p-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: var(--ink-2);
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dotted var(--rule);
+  }
+
+  /* ---------- impact ---------- */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .impact-card {
+    display: flex; flex-direction: column;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 32px 28px;
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+    color: inherit;
+  }
+  .impact-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px -12px rgba(0,0,0,0.12);
+    border-color: var(--ink-2);
+  }
+  .impact-card .i-tag {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .impact-card h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 14px;
+    line-height: 1.45;
+    text-wrap: pretty;
+  }
+  .impact-card p {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--ink-2);
+    margin: 0;
+    flex: 1;
+  }
+  .impact-card .i-meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 16px;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px dotted var(--rule);
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+  .impact-card .i-host {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  .impact-card .i-link {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .impact-card:hover .i-link { color: var(--accent); }
+
+  /* ---------- contact ---------- */
+  .contact {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .contact-msg {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+  .contact-msg em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .contact-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 32px;
+  }
+  .contact-card dl {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 14px 16px;
+    margin: 0;
+  }
+  .contact-card dt {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 4px;
+  }
+  .contact-card dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 16px;
+  }
+  .contact-card dd small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .contact-card a:hover { color: var(--accent); }
+
+  .links-row {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .ext-link {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 1px solid var(--rule);
+    color: var(--ink-2);
+    transition: all .2s;
+  }
+  .ext-link:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+  /* ---------- footer ---------- */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 48px 32px 56px;
+    margin-top: 0;
+  }
+  .footer-inner {
+    max-width: 1320px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-inner .copy {
+    font-family: var(--latin);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .footer-inner .built {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; gap: 32px; }
+    .section-head { grid-template-columns: 1fr; gap: 8px; }
+    .pull-grid { grid-template-columns: repeat(2, 1fr); }
+    .research-grid { grid-template-columns: 1fr; }
+    .awards { grid-template-columns: 1fr; }
+    .award:nth-child(odd) { padding-right: 0; border-right: 0; }
+    .award:nth-child(even) { padding-left: 0; }
+    .two-col { grid-template-columns: 1fr; gap: 32px; }
+    .projects { grid-template-columns: 1fr; }
+    .impact-grid { grid-template-columns: 1fr; }
+    .contact { grid-template-columns: 1fr; gap: 32px; }
+    .pub { grid-template-columns: 60px 1fr; }
+    .pub .meta { grid-column: 2; text-align: left; }
+    .t-item { grid-template-columns: 1fr; gap: 4px; }
+    main { padding: 0 20px; }
+    .topbar-inner { padding: 12px 20px; }
+    .top-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="ja">後藤 晶</span>
+      <span class="en">Akira Goto ／ BEER Lab</span>
+    </div>
+    <nav class="top-nav" id="topNav">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#career">Career</a>
+      <a href="#publications">Publications</a>
+      <a href="#presentations">Talks</a>
+      <a href="#books">Books</a>
+      <a href="#awards">Awards</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#impact">Impact</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="lang-toggle" href="en/" hreflang="en">EN</a>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="about">
+  <div>
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      <span>Meiji University &nbsp;·&nbsp; School of Information &amp; Communication &nbsp;·&nbsp; BEER Lab</span>
+    </div>
+    <h1 class="hero-name-ja">後藤&nbsp;晶</h1>
+    <div class="hero-name-en">GOTO &nbsp; Akira</div>
+    <div class="hero-tags">
+      <span class="tag solid">行動経済学</span>
+      <span class="tag">実験社会科学</span>
+      <span class="tag">計算社会科学</span>
+      <span class="tag">ナッジ</span>
+      <span class="tag">クラウドソーシング実験</span>
+    </div>
+  </div>
+
+  <div class="hero-side">
+    <div class="label">Position</div>
+    <div class="value">専任准教授<small>Associate Professor</small></div>
+    <div class="label">Affiliation</div>
+    <div class="value">明治大学 情報コミュニケーション学部<small>School of Information and Communication, Meiji University</small></div>
+    <div class="label">Laboratory</div>
+    <div class="value">BEER Lab 主宰（PI）<small>Behavioral and Experimental Economics Research Lab — 本サイトは BEER Lab の公式サイトを兼ねています</small></div>
+    <div class="label">Degree</div>
+    <div class="value">博士（情報コミュニケーション学）<small>Doctor of Information and Communication</small></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT / LEDE ============ -->
+<section id="lede">
+  <div class="section-head">
+    <div class="section-num">§ 01</div>
+    <div>
+      <h2 class="section-title">専門の紹介<span class="en">About my research</span></h2>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="lede">
+      <p>専門は<em>行動経済学・実験社会科学・計算社会科学</em>です。「実験」という手法を通じて、人間の<em>協力行動・信頼関係・利他性・不平等回避</em>といった社会的行動や、行動経済学の社会実装である<em>「ナッジ」</em>を実証的に研究しています。</p>
+      <p>実験室での対面実験のみならず、クラウドソーシングを活用した<em>大規模オンライン実験</em>やフィールド実験も積極的に実施し、多様な参加者から得られるデータをもとに人間社会の協力と倫理を考えています。</p>
+      <p>明治大学情報コミュニケーション学部において <em>BEER Lab（Behavioral and Experimental Economics Research Lab）</em> を主宰し、その <em>PI（主宰者）</em> として研究プロジェクトを推進しています。</p>
+      <p>近年は、<em>AI の社会性</em>にも関心を広げ、AI 自体がどの程度社会的にふるまうのか、また<em>ダークパターンやナッジ</em>に人間と同じように誘導されるのかを、経済ゲーム実験を通じて検討する研究を進めています。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESEARCH ============ -->
+<section id="research">
+  <div class="section-head">
+    <div class="section-num">§ 02</div>
+    <div>
+      <h2 class="section-title">研究テーマ<span class="en">Research themes</span></h2>
+    </div>
+  </div>
+  <div class="research-grid">
+
+    <div class="r-card">
+      <div class="ix">01 / Cooperation</div>
+      <h3>協力と社会的ジレンマ</h3>
+      <div class="en-sub">Cooperation &amp; social dilemmas</div>
+      <p>公共財ゲーム・カタストロフゲームなどの経済ゲーム実験を通じて、損失や災害、変動が利他行動・協力行動に与える非対称な影響を検討。</p>
+      <div class="keywords"><span>public goods</span><span>catastrophe</span><span>altruism</span></div>
+    </div>
+
+    <div class="r-card">
+      <div class="ix">02 / Trust &amp; Surveillance</div>
+      <h3>監視と信頼のダイナミクス</h3>
+      <div class="en-sub">Trust under surveillance</div>
+      <p>情報社会における監視の許容度、被監視感が幸福度・社会的選好に与える影響を実験により明らかにする。監視カメラから SNS まで横断的に検討。</p>
+      <div class="keywords"><span>surveillance</span><span>well-being</span><span>privacy</span></div>
+    </div>
+
+    <div class="r-card">
+      <div class="ix">03 / Human × AI</div>
+      <h3>AIの社会性と人間との協力</h3>
+      <div class="en-sub">Sociality of artificial agents</div>
+      <p>クラウドソーシングを用いた仮想的 AI エージェント実験により、人間と AI の協力・信頼の創造／毀損／回復過程を検討。さらに、AI 自体がどの程度「社会性」をもつのか、ダークパターンやナッジに人間と同じように誘導されるのかを、経済ゲーム実験で実証的に検討している。</p>
+      <div class="keywords"><span>AI sociality</span><span>trust dynamics</span><span>dark patterns</span><span>nudge</span></div>
+    </div>
+
+    <div class="r-card">
+      <div class="ix">04 / Nudge</div>
+      <h3>ナッジの社会実装</h3>
+      <div class="en-sub">Behavioral interventions in the wild</div>
+      <p>南三陸町をはじめとする自治体・企業との連携で、資源循環・環境配慮行動を促進するナッジや誘因システムを設計・実証。</p>
+      <div class="keywords"><span>nudge</span><span>field experiment</span><span>environment</span></div>
+    </div>
+
+    <div class="r-card">
+      <div class="ix">05 / Inequality</div>
+      <h3>不平等と所得格差</h3>
+      <div class="en-sub">Inequality &amp; mobility</div>
+      <p>富の可視性が経済的流動性や社会的選好に与える影響を、ゲーム実験とビッグデータ分析の両輪で検証。Journal of Economic Interaction and Coordination (2025) ほか。</p>
+      <div class="keywords"><span>wealth</span><span>mobility</span><span>fairness</span></div>
+    </div>
+
+    <div class="r-card">
+      <div class="ix">06 / Methods</div>
+      <h3>オンライン実験の方法論</h3>
+      <div class="en-sub">Online experiment infrastructure</div>
+      <p>oTree を中心とした実験環境の開発と、Satisfice／IMC など、クラウドソーシング実験における品質管理上の課題に関する研究。</p>
+      <div class="keywords"><span>oTree</span><span>crowdsourcing</span><span>IMC</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CAREER ============ -->
+<section id="career">
+  <div class="section-head">
+    <div class="section-num">§ 03</div>
+    <div>
+      <h2 class="section-title">経歴<span class="en">Academic career</span></h2>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="t-item current">
+      <div class="t-when">2023 — Present</div>
+      <div class="t-what">明治大学 情報コミュニケーション学部 専任准教授<small>Meiji University, Associate Professor</small></div>
+    </div>
+    <div class="t-item">
+      <div class="t-when">2019 — 2023</div>
+      <div class="t-what">明治大学 情報コミュニケーション学部 専任講師<small>Meiji University, Lecturer</small></div>
+    </div>
+    <div class="t-item">
+      <div class="t-when">2018 — 2019</div>
+      <div class="t-what">多摩大学 経営情報学部 専任講師<small>Tama University, Lecturer</small></div>
+    </div>
+    <div class="t-item">
+      <div class="t-when">2013 — 2018</div>
+      <div class="t-what">山梨英和大学 人間文化学部 助教<small>Yamanashi Eiwa College, Assistant Professor</small></div>
+    </div>
+    <div class="t-item">
+      <div class="t-when">2010 — 2013</div>
+      <div class="t-what">明治大学 情報コミュニケーション学部 助手<small>Meiji University, Research Assistant</small></div>
+    </div>
+    <div class="t-item">
+      <div class="t-when">2015</div>
+      <div class="t-what">明治大学大学院 情報コミュニケーション研究科 博士課程修了<small>Doctor of Information and Communication, Meiji University</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PUBLICATIONS ============ -->
+<section id="publications">
+  <div class="section-head">
+    <div class="section-num">§ 04</div>
+    <div>
+      <h2 class="section-title">主要論文<span class="en">Selected publications</span></h2>
+    </div>
+  </div>
+  <div class="section-body">
+    <div id="pubsRoot"></div>
+  </div>
+</section>
+
+<!-- ============ PRESENTATIONS ============ -->
+<section id="presentations">
+  <div class="section-head">
+    <div class="section-num">§ 05</div>
+    <div>
+      <h2 class="section-title">講演・口頭発表<span class="en">Presentations &amp; talks</span></h2>
+    </div>
+  </div>
+  <div class="section-body">
+    <div id="presRoot"></div>
+  </div>
+</section>
+
+<!-- ============ BOOKS ============ -->
+<section id="books">
+  <div class="section-head">
+    <div class="section-num">§ 06</div>
+    <div>
+      <h2 class="section-title">著書<span class="en">Books &amp; chapters</span></h2>
+    </div>
+  </div>
+  <div class="book-list">
+    <div class="book-row">
+      <div class="b-yr">2024</div>
+      <div class="b-main">
+        <div class="b-name">oTreeではじめる社会科学実験入門</div>
+        <div class="b-sub">Pythonのインストールから実験の実施まで</div>
+        <a class="book-support-link" href="https://sites.google.com/view/akiragoto/otreebook" target="_blank" rel="noopener">サポートページ →</a>
+      </div>
+      <div class="b-meta">
+        <span class="b-pub">コロナ社</span>
+        <span class="b-kind">単著</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AWARDS ============ -->
+<section id="awards">
+  <div class="section-head">
+    <div class="section-num">§ 07</div>
+    <div>
+      <h2 class="section-title">受賞<span class="en">Honors &amp; awards</span></h2>
+    </div>
+  </div>
+  <div class="awards">
+    <div class="award"><div class="a-yr">2026.09</div><div class="a-ttl">FIT論文賞<small>情報処理学会／電子情報通信学会</small></div></div>
+    <div class="award"><div class="a-yr">2026.03</div><div class="a-ttl">山下記念研究賞<small>情報処理学会</small></div></div>
+    <div class="award"><div class="a-yr">2026.03</div><div class="a-ttl">優秀発表賞<small>情報コミュニケーション学会</small></div></div>
+    <div class="award"><div class="a-yr">2026.02</div><div class="a-ttl">行動経済学会ポスター報告奨励賞<small>北野翔大・後藤晶・笹鹿祐司</small></div></div>
+    <div class="award"><div class="a-yr">2025.09</div><div class="a-ttl">論文奨励賞<small>社会情報学会（共著・山本輝太郎ほか）</small></div></div>
+    <div class="award"><div class="a-yr">2024.11</div><div class="a-ttl">論文奨励賞<small>社会情報学会「人間は人工知能と協力できるか」</small></div></div>
+    <div class="award"><div class="a-yr">2017.09</div><div class="a-ttl">優秀発表賞<small>社会情報学会</small></div></div>
+    <div class="award"><div class="a-yr">2016.09</div><div class="a-ttl">論文奨励賞 佳作<small>社会情報学会「損失は協力行動を促進するか」</small></div></div>
+    <div class="award"><div class="a-yr">2013.03</div><div class="a-ttl">全国大会 優秀発表賞<small>情報コミュニケーション学会</small></div></div>
+    <div class="award"><div class="a-yr">2010.03</div><div class="a-ttl">第一回 明治大学大学院 院長賞<small>Meiji University Graduate School Dean's Award</small></div></div>
+  </div>
+</section>
+
+<!-- ============ TEACHING & ORGS ============ -->
+<section id="teaching">
+  <div class="section-head">
+    <div class="section-num">§ 08</div>
+    <div>
+      <h2 class="section-title">担当科目・所属<span class="en">Teaching &amp; affiliations</span></h2>
+    </div>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="col-h">担当科目 — Courses</div>
+      <ul class="course-list">
+        <li><span class="name">クリエイティブ・コミュニケーション（行動経済学）</span><span class="where">情報コミュニケーション学部</span></li>
+        <li><span class="name">不確実性下の人間行動</span><span class="where">情報コミュニケーション学部</span></li>
+        <li><span class="name">情報と経済行動</span><span class="where">情報コミュニケーション学部</span></li>
+        <li><span class="name">問題分析ゼミナールI / II（後藤ゼミ・3年）</span><span class="where">情報コミュニケーション学部</span></li>
+        <li><span class="name">問題解決ゼミナールI / II（後藤ゼミ・4年）</span><span class="where">情報コミュニケーション学部</span></li>
+        <li><span class="name">専門情報リテラシー（社会統計）</span><span class="where">情報コミュニケーション学部</span></li>
+        <li><span class="name">データ解析論 I / II</span><span class="where">情報コミュニケーション学部</span></li>
+        <li><span class="name">基礎ゼミナール</span><span class="where">情報コミュニケーション学部</span></li>
+        <li><span class="name">行動経済学（大学院）</span><span class="where">情報コミュニケーション研究科</span></li>
+        <li><span class="name">意思決定論</span><span class="where">山梨英和大学（非常勤）</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-h">学会役職 — Society service</div>
+      <ul class="org-list">
+        <li><div><span class="role">プログラム副委員長</span><span class="org">行動経済学会</span></div><span class="yr">2026 — 現在</span></li>
+        <li><div><span class="role">理事</span><span class="org">行動経済学会</span></div><span class="yr">2025 — 現在</span></li>
+        <li><div><span class="role">理事</span><span class="org">社会情報学会</span></div><span class="yr">2025 — 現在</span></li>
+        <li><div><span class="role">運営委員</span><span class="org">情報処理学会 情報システムと社会環境研究会</span></div><span class="yr">2025 — 現在</span></li>
+        <li><div><span class="role">理事</span><span class="org">情報コミュニケーション学会</span></div><span class="yr">2020 — 現在</span></li>
+        <li><div><span class="role">嘱託研究員</span><span class="org">同志社大学 技術・企業・国際競争力研究センター</span></div><span class="yr">2020 — 現在</span></li>
+        <li><div><span class="role">事務局長</span><span class="org">社会情報学会</span></div><span class="yr">2021 — 2025</span></li>
+        <li><div><span class="role">編集委員長</span><span class="org">情報処理学会 論文誌「情報システム論文」特集</span></div><span class="yr">2024 — 2025</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="section-head">
+    <div class="section-num">§ 09</div>
+    <div>
+      <h2 class="section-title">主要研究プロジェクト<span class="en">Funded projects</span></h2>
+    </div>
+  </div>
+  <div class="projects">
+
+    <div class="proj">
+      <div class="p-when">2025 — 2029</div>
+      <h4>階層の成立と圧政／善政の規定因<br>—— 新しい2つの実験ゲームによる検討</h4>
+      <div class="p-funder">日本学術振興会 科研費 基盤研究(B)</div>
+      <div class="p-role">ROLE / 研究分担者　PI / 大薗博記</div>
+    </div>
+
+    <div class="proj">
+      <div class="p-when">2025 — 2028</div>
+      <h4>AIを巡る社会性 ── AI同士の社会性とAIに対する社会性</h4>
+      <div class="p-funder">日本学術振興会 科研費 基盤研究(C)</div>
+      <div class="p-role">ROLE / 研究代表者</div>
+    </div>
+
+    <div class="proj">
+      <div class="p-when">2025 — 2027</div>
+      <h4>AIと人間の信頼のダイナミクス<br>—— ゲーム実験を用いた信頼創造・毀損・回復過程の検討</h4>
+      <div class="p-funder">電気通信普及財団 40周年記念枠</div>
+      <div class="p-role">ROLE / 研究代表者</div>
+    </div>
+
+    <div class="proj">
+      <div class="p-when">2023 — 2027</div>
+      <h4>実験とビッグデータ分析による不平等是正行動の実証研究</h4>
+      <div class="p-funder">日本学術振興会 科研費 基盤研究(B)</div>
+      <div class="p-role">ROLE / 研究分担者　PI / 清水和巳</div>
+    </div>
+
+    <div class="proj">
+      <div class="p-when">2022 — 2025</div>
+      <h4>想定外の事象が選好に与える影響の解明<br>—— オンライン実験とパネル実験による検討</h4>
+      <div class="p-funder">日本学術振興会 科研費 若手研究</div>
+      <div class="p-role">ROLE / 研究代表者</div>
+    </div>
+
+    <div class="proj">
+      <div class="p-when">2024 — 2026</div>
+      <h4>鹿島学術振興財団 研究助成</h4>
+      <div class="p-funder">公益財団法人 鹿島学術振興財団</div>
+      <div class="p-role">ROLE / 研究代表者</div>
+    </div>
+
+    <div class="proj">
+      <div class="p-when">継続中</div>
+      <h4>企業との共同研究<br>—— 行動経済学・ナッジの社会実装</h4>
+      <div class="p-funder">民間企業との産学連携プロジェクト</div>
+      <div class="p-role">ROLE / 研究代表者　詳細はお問い合わせください</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ POLICY / SOCIAL IMPLEMENTATION ============ -->
+<section id="impact">
+  <div class="section-head">
+    <div class="section-num">§ 10</div>
+    <div>
+      <h2 class="section-title">政策・社会実装<span class="en">Policy &amp; social implementation</span></h2>
+    </div>
+  </div>
+  <div class="impact-grid">
+
+    <a class="impact-card" href="https://healthapp.city.sapporo.jp/" target="_blank" rel="noopener">
+      <div class="i-tag">自治体連携 — 政策協力</div>
+      <h4>札幌市健康アプリ「アルカサル」</h4>
+      <p>「人と地域とがつながる　健康なまち札幌」をテーマに札幌市が提供する健康アプリ「アルカサル」に、行動経済学／ナッジの観点から設計・運営に協力しています。</p>
+      <div class="i-meta">
+        <span class="i-host">札幌市</span>
+        <span class="i-link">healthapp.city.sapporo.jp ↗</span>
+      </div>
+    </a>
+
+    <a class="impact-card" href="https://healthapp.city.sapporo.jp/explore/column" target="_blank" rel="noopener">
+      <div class="i-tag">寄稿 — 有識者コラム</div>
+      <h4>「有識者によるお役立ちコラム」寄稿</h4>
+      <p>「アルカサル」の「学ばさる！健康アプリ（Explore）」内に設けられたコラムコーナーに、行動経済学の知見を一般向けにわかりやすく紹介する原稿を継続的に寄稿しています。</p>
+      <div class="i-meta">
+        <span class="i-host">healthapp.city.sapporo.jp</span>
+        <span class="i-link">記事一覧を見る ↗</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="section-head">
+    <div class="section-num">§ 11</div>
+    <div>
+      <h2 class="section-title">連絡先<span class="en">Get in touch</span></h2>
+    </div>
+  </div>
+  <div class="contact">
+    <div class="contact-msg">
+      行動経済学・実験社会科学の<em>研究相談</em>、<em>共同研究</em>、<em>講演依頼</em>、<em>大学院進学</em>のご相談まで——お気軽にご連絡ください。
+    </div>
+    <div class="contact-card">
+      <dl>
+        <dt>Email</dt>
+        <dd><a id="emailLink" href="#" rel="nofollow">[click to reveal]</a></dd>
+        <dt>Office</dt>
+        <dd>明治大学 和泉キャンパス<small>情報コミュニケーション学部</small></dd>
+        <dt>Researcher ID</dt>
+        <dd>80707886<small>科研費 / KAKEN</small></dd>
+      </dl>
+      <div class="links-row">
+        <a class="ext-link" href="https://www.meiji.ac.jp/" target="_blank" rel="noopener">明治大学</a>
+        <a class="ext-link" href="https://www.meiji.ac.jp/infocom/" target="_blank" rel="noopener">情報コミュニケーション学部</a>
+        <a class="ext-link" href="https://researchmap.jp/akiragoto" target="_blank" rel="noopener">researchmap</a>
+        <a class="ext-link" href="https://nrid.nii.ac.jp/ja/nrid/1000080707886/" target="_blank" rel="noopener">KAKEN</a>
+        <a class="ext-link" href="https://jglobal.jst.go.jp/detail?JGLOBAL_ID=201901005941241880" target="_blank" rel="noopener">J-GLOBAL</a>
+        <a class="ext-link" href="https://gyoseki1.mind.meiji.ac.jp/mjuhp/KgApp?resId=S002321" target="_blank" rel="noopener">教員DB</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="copy">© 2026 Akira Goto ／ BEER Lab, School of Information and Communication, Meiji University.</div>
+    <div class="built">Last updated <span id="lastUpdated">2026.08</span> · v1.0</div>
+  </div>
+</footer>
+
+<!-- ============ TWEAKS ============ -->
+<script src="assets/vendor/react.production.min.js"></script>
+<script src="assets/vendor/react-dom.production.min.js"></script>
+<script src="assets/app.js"></script>
+</body></html>
