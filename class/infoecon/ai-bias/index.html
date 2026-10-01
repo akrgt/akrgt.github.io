@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ja">
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AIと人間の判断くらべ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap">
+<style>
+/* 講義スライドと同じピンク×チャコール．1問ずつ縦に並ぶカード．答えるまで結果は閉じたまま */
+:root{
+  --bg:#fbf8fb; --paper:#ffffff; --fg:#2c2830; --muted:#6c6570; --line:#e7dde6;
+  --pink:#d9449f; --pink-soft:#f7d9ec; --ink:#535353; --ink-soft:#dcdadd; --human:#2c2830;
+  --display:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --body:"BIZ UDPGothic","Hiragino Sans","Yu Gothic",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1b191d; --paper:#242127; --fg:#eeeaf0; --muted:#aaa2ae; --line:#3a343d;
+  --pink:#f08fd0; --pink-soft:#4a2a3e; --ink:#bdb7c1; --ink-soft:#3d3940; --human:#eeeaf0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1b191d; --paper:#242127; --fg:#eeeaf0; --muted:#aaa2ae; --line:#3a343d;
+  --pink:#f08fd0; --pink-soft:#4a2a3e; --ink:#bdb7c1; --ink-soft:#3d3940; --human:#eeeaf0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+header h1{font-family:var(--display);font-weight:900;font-size:clamp(1.7rem,5vw,2.4rem);line-height:1.3;margin:0;text-wrap:balance}
+header .course{font-size:.8rem;letter-spacing:.12em;color:var(--pink);font-weight:700}
+header p{margin:.6em 0 0;color:var(--muted);max-width:62ch}
+.note{font-size:.8rem;color:var(--muted)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.card h2{font-family:var(--display);font-size:1.25rem;margin:0;display:flex;gap:.6em;align-items:baseline;flex-wrap:wrap}
+.card h2 .no{color:var(--pink);font-variant-numeric:tabular-nums}
+.q{white-space:pre-wrap;background:var(--bg);border-radius:6px;padding:12px 14px;margin:0}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--pink);background:var(--pink-soft)}
+.opt input{margin-top:.45em;accent-color:var(--pink)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input[type=number]{font:inherit;width:9em;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--fg)}
+button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:9px 20px;background:var(--pink);color:#fff;cursor:pointer;align-self:flex-start}
+:root[data-theme="dark"] button{color:#1b191d}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button{color:#1b191d}}
+button:disabled{opacity:.4;cursor:default}
+button:focus-visible,.opt:focus-within,input:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+.result{display:flex;flex-direction:column;gap:14px;border-top:1px dashed var(--line);padding-top:14px}
+.you{font-weight:700}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:4px}
+.chart{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr);gap:6px 10px;font-size:.85rem;align-items:center}
+.chart .lab{line-height:1.25}
+.chart .lab small{display:block;color:var(--muted);font-size:.72rem}
+.chart .lab.h{font-weight:700}
+.bars{display:flex;flex-direction:column;gap:3px}
+.track{position:relative;height:14px;background:var(--bg);border-radius:3px}
+.bar{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.bar.c0{background:var(--pink)} .bar.c1{background:var(--ink)}
+.bar.hum.c0{background:transparent;border:2px solid var(--pink)} .bar.hum.c1{background:transparent;border:2px solid var(--ink)}
+.val{position:absolute;top:-1px;font-size:.72rem;font-variant-numeric:tabular-nums;line-height:16px;white-space:nowrap;padding-left:4px}
+.val.in{color:var(--bg);font-weight:700;padding-left:0} .val.hin{color:var(--fg)}
+.ref{position:absolute;top:-3px;bottom:-3px;width:0;border-left:2px dotted var(--human)}
+.sep{grid-column:1/-1;border-top:1px solid var(--line);margin:4px 0}
+.take{background:var(--pink-soft);border-radius:8px;padding:10px 14px;margin:0}
+details{border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+summary{cursor:pointer;font-weight:700}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;font-size:.8rem;font-variant-numeric:tabular-nums;min-width:100%}
+th,td{padding:4px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+.pilot{border:1px solid var(--pink);color:var(--pink);border-radius:6px;padding:8px 12px;font-size:.85rem}
+footer{font-size:.78rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+@media (max-width:480px){.chart{grid-template-columns:minmax(0,8em) minmax(0,1fr)}}
+@media (prefers-reduced-motion:no-preference){.bar{transition:width .6s ease-out}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="course">情報と経済行動 2026 秋</div>
+    <h1>AIと人間の判断くらべ</h1>
+    <p>行動経済学の有名な5つの問題に，まずあなたが答えてください．答えると，元の実験での人間の結果と，12種類のAIに同じ問題を各200回解かせた結果が開きます．正解を当てる問題ではありません．直感で答えてください．</p>
+  </header>
+  <div id="pilotNote" class="pilot" hidden>このページのAIの結果は試験実行（各条件5回）の暫定値です．本番の結果に差し替える予定です．</div>
+  <main id="quiz" style="display:flex;flex-direction:column;gap:28px"></main>
+  <footer>
+    <div>AIの結果：2026年9月に，同じ問題（言い回しを5通りに変えたもの）を各モデル・各条件100回ずつ解かせた．温度などの設定はモデルの既定値．選択肢の並び順は半数で入れ替えた．</div>
+    <div>人間の結果：Tversky &amp; Kahneman (1974, 1981, 1983)，Kahneman &amp; Tversky (1979)，Kahneman, Knetsch &amp; Thaler (1990)．あなたの回答はこの画面の中だけで使い，どこにも送られない．</div>
+    <div id="built"></div>
+  </footer>
+</div>
+
+<script>
+const DATA = {"framing": {"models": [{"id": "gpt-5.6-sol", "name": "GPT-5.6 Sol", "company": "OpenAI", "conds": {"gain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "loss": {"v": 95.0, "n": 100, "order": {"0": {"v": 96.0, "n": 50}, "1": {"v": 94.0, "n": 50}}}}}, {"id": "gpt-5.6-terra", "name": "GPT-5.6 Terra", "company": "OpenAI", "conds": {"gain": {"v": 95.0, "n": 100, "order": {"0": {"v": 90.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "loss": {"v": 57.0, "n": 100, "order": {"0": {"v": 90.0, "n": 50}, "1": {"v": 24.0, "n": 50}}}}}, {"id": "gpt-5.6-luna", "name": "GPT-5.6 Luna", "company": "OpenAI", "conds": {"gain": {"v": 51.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 2.0, "n": 50}}}, "loss": {"v": 55.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 10.0, "n": 50}}}}}, {"id": "claude-opus-5-5", "name": "Claude Opus 5.5", "company": "Anthropic", "conds": {"gain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "loss": {"v": 6.0, "n": 100, "order": {"0": {"v": 12.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5", "company": "Anthropic", "conds": {"gain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "loss": {"v": 29.0, "n": 100, "order": {"0": {"v": 30.0, "n": 50}, "1": {"v": 28.0, "n": 50}}}}}, {"id": "claude-haiku-4-5-20251001", "name": "Claude Haiku 4.5", "company": "Anthropic", "conds": {"gain": {"v": 77.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 54.0, "n": 50}}}, "loss": {"v": 56.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 12.0, "n": 50}}}}}, {"id": "gemini-3.1-pro-preview", "name": "Gemini 3.1 Pro", "company": "Google", "conds": {"gain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "loss": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gemini-3.8-flash", "name": "Gemini 3.8 Flash", "company": "Google", "conds": {"gain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "loss": {"v": 10.0, "n": 100, "order": {"0": {"v": 20.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gemini-3.5-flash-lite", "name": "Gemini 3.5 Flash-Lite", "company": "Google", "conds": {"gain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "loss": {"v": 64.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 28.0, "n": 50}}}}}, {"id": "openai/gpt-oss-120b", "name": "gpt-oss-120b", "company": "公開モデル", "conds": {"gain": {"v": 27.0, "n": 100, "order": {"0": {"v": 18.0, "n": 50}, "1": {"v": 36.0, "n": 50}}}, "loss": {"v": 43.0, "n": 100, "order": {"0": {"v": 22.0, "n": 50}, "1": {"v": 64.0, "n": 50}}}}}, {"id": "meta/llama-3.3-70b", "name": "Llama 3.3 70B", "company": "公開モデル", "conds": {"gain": {"v": 51.0, "n": 100, "order": {"0": {"v": 2.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "loss": {"v": 21.0, "n": 100, "order": {"0": {"v": 34.0, "n": 50}, "1": {"v": 8.0, "n": 50}}}}}, {"id": "google/gemma-4-31b", "name": "Gemma 4 31B", "company": "公開モデル", "conds": {"gain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "loss": {"v": 14.0, "n": 100, "order": {"0": {"v": 8.0, "n": 50}, "1": {"v": 20.0, "n": 50}}}}}], "human": {"gain": 72, "loss": 22, "src": "Tversky & Kahneman (1981)，N=152・155"}, "source": "本番"}, "anchoring": {"models": [{"id": "gpt-5.6-sol", "name": "GPT-5.6 Sol", "company": "OpenAI", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}, {"id": "gpt-5.6-terra", "name": "GPT-5.6 Terra", "company": "OpenAI", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}, {"id": "gpt-5.6-luna", "name": "GPT-5.6 Luna", "company": "OpenAI", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}, {"id": "claude-opus-5-5", "name": "Claude Opus 5.5", "company": "Anthropic", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}, {"id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5", "company": "Anthropic", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}, {"id": "claude-haiku-4-5-20251001", "name": "Claude Haiku 4.5", "company": "Anthropic", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}, {"id": "gemini-3.1-pro-preview", "name": "Gemini 3.1 Pro", "company": "Google", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}, {"id": "gemini-3.8-flash", "name": "Gemini 3.8 Flash", "company": "Google", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}, {"id": "gemini-3.5-flash-lite", "name": "Gemini 3.5 Flash-Lite", "company": "Google", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 45.0, "n": 100, "order": {"0": {"v": 45.0, "n": 100}}}}}, {"id": "openai/gpt-oss-120b", "name": "gpt-oss-120b", "company": "公開モデル", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}, {"id": "meta/llama-3.3-70b", "name": "Llama 3.3 70B", "company": "公開モデル", "conds": {"low": {"v": 67.0, "n": 100, "order": {"0": {"v": 67.0, "n": 100}}}, "high": {"v": 58.5, "n": 100, "order": {"0": {"v": 58.5, "n": 100}}}}}, {"id": "google/gemma-4-31b", "name": "Gemma 4 31B", "company": "公開モデル", "conds": {"low": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}, "high": {"v": 28.0, "n": 100, "order": {"0": {"v": 28.0, "n": 100}}}}}], "human": {"low": 25, "high": 45, "src": "Tversky & Kahneman (1974)，推定の中央値"}, "source": "本番"}, "linda": {"models": [{"id": "gpt-5.6-sol", "name": "GPT-5.6 Sol", "company": "OpenAI", "conds": {"typical": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gpt-5.6-terra", "name": "GPT-5.6 Terra", "company": "OpenAI", "conds": {"typical": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gpt-5.6-luna", "name": "GPT-5.6 Luna", "company": "OpenAI", "conds": {"typical": {"v": 16.0, "n": 100, "order": {"0": {"v": 30.0, "n": 50}, "1": {"v": 2.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "claude-opus-5-5", "name": "Claude Opus 5.5", "company": "Anthropic", "conds": {"typical": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5", "company": "Anthropic", "conds": {"typical": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "claude-haiku-4-5-20251001", "name": "Claude Haiku 4.5", "company": "Anthropic", "conds": {"typical": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gemini-3.1-pro-preview", "name": "Gemini 3.1 Pro", "company": "Google", "conds": {"typical": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gemini-3.8-flash", "name": "Gemini 3.8 Flash", "company": "Google", "conds": {"typical": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gemini-3.5-flash-lite", "name": "Gemini 3.5 Flash-Lite", "company": "Google", "conds": {"typical": {"v": 49.0, "n": 100, "order": {"0": {"v": 40.0, "n": 50}, "1": {"v": 58.0, "n": 50}}}, "neutral": {"v": 34.0, "n": 100, "order": {"0": {"v": 56.0, "n": 50}, "1": {"v": 12.0, "n": 50}}}}}, {"id": "openai/gpt-oss-120b", "name": "gpt-oss-120b", "company": "公開モデル", "conds": {"typical": {"v": 24.0, "n": 100, "order": {"0": {"v": 26.0, "n": 50}, "1": {"v": 22.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "meta/llama-3.3-70b", "name": "Llama 3.3 70B", "company": "公開モデル", "conds": {"typical": {"v": 97.3, "n": 75, "order": {"0": {"v": 100.0, "n": 39}, "1": {"v": 94.4, "n": 36}}}, "neutral": {"v": 3.0, "n": 100, "order": {"0": {"v": 6.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "google/gemma-4-31b", "name": "Gemma 4 31B", "company": "公開モデル", "conds": {"typical": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}, "neutral": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}], "human": {"typical": 85, "src": "Tversky & Kahneman (1983)，N=142"}, "source": "本番"}, "allais": {"models": [{"id": "gpt-5.6-sol", "name": "GPT-5.6 Sol", "company": "OpenAI", "conds": {"certain": {"v": 58.0, "n": 100, "order": {"0": {"v": 50.0, "n": 50}, "1": {"v": 66.0, "n": 50}}}, "uncertain": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gpt-5.6-terra", "name": "GPT-5.6 Terra", "company": "OpenAI", "conds": {"certain": {"v": 22.0, "n": 100, "order": {"0": {"v": 14.0, "n": 50}, "1": {"v": 30.0, "n": 50}}}, "uncertain": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gpt-5.6-luna", "name": "GPT-5.6 Luna", "company": "OpenAI", "conds": {"certain": {"v": 44.0, "n": 100, "order": {"0": {"v": 84.0, "n": 50}, "1": {"v": 4.0, "n": 50}}}, "uncertain": {"v": 12.0, "n": 100, "order": {"0": {"v": 22.0, "n": 50}, "1": {"v": 2.0, "n": 50}}}}}, {"id": "claude-opus-5-5", "name": "Claude Opus 5.5", "company": "Anthropic", "conds": {"certain": {"v": 85.0, "n": 100, "order": {"0": {"v": 92.0, "n": 50}, "1": {"v": 78.0, "n": 50}}}, "uncertain": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5", "company": "Anthropic", "conds": {"certain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "uncertain": {"v": 21.0, "n": 100, "order": {"0": {"v": 42.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "claude-haiku-4-5-20251001", "name": "Claude Haiku 4.5", "company": "Anthropic", "conds": {"certain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "uncertain": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gemini-3.1-pro-preview", "name": "Gemini 3.1 Pro", "company": "Google", "conds": {"certain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "uncertain": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gemini-3.8-flash", "name": "Gemini 3.8 Flash", "company": "Google", "conds": {"certain": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "uncertain": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "gemini-3.5-flash-lite", "name": "Gemini 3.5 Flash-Lite", "company": "Google", "conds": {"certain": {"v": 83.0, "n": 100, "order": {"0": {"v": 90.0, "n": 50}, "1": {"v": 76.0, "n": 50}}}, "uncertain": {"v": 2.0, "n": 100, "order": {"0": {"v": 4.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}, {"id": "openai/gpt-oss-120b", "name": "gpt-oss-120b", "company": "公開モデル", "conds": {"certain": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}, "uncertain": {"v": 1.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 2.0, "n": 50}}}}}, {"id": "meta/llama-3.3-70b", "name": "Llama 3.3 70B", "company": "公開モデル", "conds": {"certain": {"v": 80.0, "n": 100, "order": {"0": {"v": 60.0, "n": 50}, "1": {"v": 100.0, "n": 50}}}, "uncertain": {"v": 5.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 10.0, "n": 50}}}}}, {"id": "google/gemma-4-31b", "name": "Gemma 4 31B", "company": "公開モデル", "conds": {"certain": {"v": 95.0, "n": 100, "order": {"0": {"v": 100.0, "n": 50}, "1": {"v": 90.0, "n": 50}}}, "uncertain": {"v": 0.0, "n": 100, "order": {"0": {"v": 0.0, "n": 50}, "1": {"v": 0.0, "n": 50}}}}}], "human": {"certain": 82, "uncertain": 17, "src": "Kahneman & Tversky (1979)，各N=72"}, "source": "本番"}, "endowment": {"models": [{"id": "gpt-5.6-sol", "name": "GPT-5.6 Sol", "company": "OpenAI", "conds": {"seller": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}, "buyer": {"v": 66.7, "n": 100, "order": {"0": {"v": 66.7, "n": 100}}}}}, {"id": "gpt-5.6-terra", "name": "GPT-5.6 Terra", "company": "OpenAI", "conds": {"seller": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}, "buyer": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}}}, {"id": "gpt-5.6-luna", "name": "GPT-5.6 Luna", "company": "OpenAI", "conds": {"seller": {"v": 129.2, "n": 100, "order": {"0": {"v": 129.2, "n": 100}}}, "buyer": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}}}, {"id": "claude-opus-5-5", "name": "Claude Opus 5.5", "company": "Anthropic", "conds": {"seller": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}, "buyer": {"v": 59.2, "n": 100, "order": {"0": {"v": 59.2, "n": 100}}}}}, {"id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5", "company": "Anthropic", "conds": {"seller": {"v": 120.0, "n": 100, "order": {"0": {"v": 120.0, "n": 100}}}, "buyer": {"v": 81.7, "n": 100, "order": {"0": {"v": 81.7, "n": 100}}}}}, {"id": "claude-haiku-4-5-20251001", "name": "Claude Haiku 4.5", "company": "Anthropic", "conds": {"seller": {"v": 130.0, "n": 100, "order": {"0": {"v": 130.0, "n": 100}}}, "buyer": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}}}, {"id": "gemini-3.1-pro-preview", "name": "Gemini 3.1 Pro", "company": "Google", "conds": {"seller": {"v": 125.0, "n": 100, "order": {"0": {"v": 125.0, "n": 100}}}, "buyer": {"v": 50.0, "n": 100, "order": {"0": {"v": 50.0, "n": 100}}}}}, {"id": "gemini-3.8-flash", "name": "Gemini 3.8 Flash", "company": "Google", "conds": {"seller": {"v": 125.0, "n": 100, "order": {"0": {"v": 125.0, "n": 100}}}, "buyer": {"v": 62.5, "n": 100, "order": {"0": {"v": 62.5, "n": 100}}}}}, {"id": "gemini-3.5-flash-lite", "name": "Gemini 3.5 Flash-Lite", "company": "Google", "conds": {"seller": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}, "buyer": {"v": 93.8, "n": 100, "order": {"0": {"v": 93.8, "n": 100}}}}}, {"id": "openai/gpt-oss-120b", "name": "gpt-oss-120b", "company": "公開モデル", "conds": {"seller": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}, "buyer": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}}}, {"id": "meta/llama-3.3-70b", "name": "Llama 3.3 70B", "company": "公開モデル", "conds": {"seller": {"v": 50.0, "n": 100, "order": {"0": {"v": 50.0, "n": 100}}}, "buyer": {"v": 83.3, "n": 100, "order": {"0": {"v": 83.3, "n": 100}}}}}, {"id": "google/gemma-4-31b", "name": "Gemma 4 31B", "company": "公開モデル", "conds": {"seller": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}, "buyer": {"v": 100.0, "n": 100, "order": {"0": {"v": 100.0, "n": 100}}}}}], "human": {"seller": 7.12, "buyer": 2.87, "chooser": 3.12, "src": "Kahneman, Knetsch & Thaler (1990) 実験6，中央値（ドル）"}, "source": "本番"}};
+const META = {"built": "2026-09-30", "all_final": true};
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const el = (tag, attrs = {}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) k === "class" ? e.className = v : k === "html" ? e.innerHTML = v : e.setAttribute(k, v);
+  kids.flat(Infinity).forEach(k => e.append(k));
+  return e;
+};
+
+/* 横棒グラフ：人間の行（枠だけの棒）→ 各モデル（塗りの棒）．条件ごとに2本 */
+function chart({conds, labels, human, models, max, fmt, ref, refLabel}) {
+  const box = el("div");
+  box.append(el("div", {class: "legend"},
+    conds.map((c, i) => el("span", {}, el("span", {class: "sw", style: `background:var(${i ? "--ink" : "--pink"})`}), labels[i])),
+    el("span", {}, el("span", {class: "sw", style: "border:2px solid var(--muted)"}), "枠だけ＝人間（元の実験）"),
+    ref != null ? el("span", {}, "点線＝" + refLabel) : ""));
+  const g = el("div", {class: "chart"});
+  const row = (name, sub, vals, isHuman) => {
+    g.append(el("div", {class: "lab" + (isHuman ? " h" : "")}, name, sub ? el("small", {}, sub) : ""));
+    const bars = el("div", {class: "bars"});
+    vals.forEach((v, i) => {
+      const t = el("div", {class: "track"});
+      if (v != null) {
+        const w = Math.max(0, Math.min(100, v / max * 100));
+        t.append(el("div", {class: `bar c${i}${isHuman ? " hum" : ""}`, style: `width:${w}%`}));
+        // 長い棒は数字を棒の内側の右端に置く（はみ出し防止）
+        t.append(w > 80
+          ? el("span", {class: "val in" + (isHuman ? " hin" : ""), style: `right:calc(${100 - w}% + 4px)`}, fmt(v))
+          : el("span", {class: "val", style: `left:${w}%`}, fmt(v)));
+      } else if (isHuman) t.append(el("span", {class: "val", style: "left:0;color:var(--muted)"}, "元の実験になし"));
+      if (ref != null) t.append(el("div", {class: "ref", style: `left:${ref / max * 100}%`}));
+      bars.append(t);
+    });
+    g.append(bars);
+  };
+  if (human) row("人間", human.src, conds.map(c => human[c] ?? null), true);
+  g.append(el("div", {class: "sep"}));
+  models.forEach(m => row(m.name, m.company, conds.map(c => m.conds[c]?.v ?? null), false));
+  box.append(g);
+  return box;
+}
+
+/* 選択肢の順番の効果：そのまま／入れ替え の表 */
+function orderTable(models, conds, labels, fmt) {
+  const d = el("details", {}, el("summary", {}, "選択肢の順番を入れ替えると？"));
+  d.append(el("p", {class: "note"}, "AIには，半数の回で選択肢AとBの位置を入れ替えて出した．内容は同じなので，本来は数字も同じになるはず．差が大きいモデルは「最初に書かれた方」や「後に書かれた方」を選びやすい．"));
+  const head = el("tr", {}, el("th", {}, "モデル"), conds.map((c, i) => [el("th", {}, labels[i] + "・そのまま"), el("th", {}, "入れ替え")]));
+  const body = models.map(m => el("tr", {}, el("td", {}, m.name), conds.map(c => {
+    const o = m.conds[c]?.order || {};
+    return ["0", "1"].map(k => el("td", {}, o[k] ? fmt(o[k].v) : "—"));
+  })));
+  d.append(el("div", {class: "tbl"}, el("table", {}, el("thead", {}, head), el("tbody", {}, body))));
+  return d;
+}
+
+const pct = v => v.toFixed(0) + "%";
+const countBy = (models, f) => models.filter(m => { try { return f(m); } catch { return false; } }).length;
+
+/* ---------- 5問の定義 ---------- */
+const Q = [];
+
+Q.push(() => {  // 1 フレーミング
+  const cond = pick(["gain", "loss"]);
+  const txt = {
+    gain: ["200人が助かる．", "1/3の確率で600人全員が助かり，2/3の確率で誰も助からない．"],
+    loss: ["400人が死亡する．", "1/3の確率で誰も死亡せず，2/3の確率で600人全員が死亡する．"]}[cond];
+  return {
+    title: "珍しい病気への対策",
+    q: "ある国で珍しい病気の流行に備えています．対策をしなければ600人が死亡すると予想されています．2つの対策が提案されました．どちらを選びますか．",
+    options: [["A", "対策A：" + txt[0]], ["B", "対策B：" + txt[1]]],
+    reveal(ans) {
+      const d = DATA.framing, labels = ["「助かる」と書いた版", "「死亡する」と書いた版"];
+      const n = countBy(d.models, m => m.conds.gain.v - m.conds.loss.v >= 10);
+      return [
+        el("p", {class: "you"}, `あなたは「${cond === "gain" ? "助かる" : "死亡する"}」と書いた版で，${ans === "A" ? "確実な案" : "賭けの案"}を選んだ．`),
+        el("p", {}, "実は，問題には2つの版がある．200人が助かることと400人が死亡することは同じ結果だが，人間は「助かる」と書かれると確実な案を，「死亡する」と書かれると賭けの案を選びやすい（フレーミング効果）．グラフは確実な案を選んだ割合．"),
+        chart({conds: ["gain", "loss"], labels, human: d.human, models: d.models, max: 100, fmt: pct}),
+        el("p", {class: "take"}, `12モデル中${n}モデルで，「助かる」版の方が確実な案を10ポイント以上多く選んだ（人間と同じ向き）．`),
+        orderTable(d.models, ["gain", "loss"], ["助かる", "死亡する"], pct)];
+    }};
+});
+
+Q.push(() => {  // 2 アンカリング
+  const a = pick([10, 65]);
+  return {
+    title: "国連とアフリカ",
+    q: `コンピュータが無作為に選んだ数字は ${a} です．\n\n問1：国際連合（国連）の加盟国のうち，アフリカの国が占める割合は${a}%より高いと思いますか，低いと思いますか．\n問2：その割合は何%だと思いますか．`,
+    options: [["高い", "高い"], ["低い", "低い"]], number: {label: "問2の答え（%）", min: 0, max: 100},
+    reveal(ans, num) {
+      const d = DATA.anchoring;
+      const n = countBy(d.models, m => m.conds.high.v - m.conds.low.v >= 5);
+      return [
+        el("p", {class: "you"}, `あなたが見た数字は${a}で，推定は${num}%．`),
+        el("p", {}, "数字は10か65のどちらかが無作為に出る．問題と無関係な数字なのに，人間は大きい数字を見た人ほど大きく推定した（アンカリング）．実際の割合は193か国中54か国で約28%．グラフは推定の中央値．"),
+        chart({conds: ["low", "high"], labels: ["10を見た", "65を見た"], human: d.human, models: d.models, max: 100, fmt: v => v.toFixed(0) + "%", ref: 28, refLabel: "実際の割合（約28%）"}),
+        el("p", {class: "take"}, `12モデル中${n}モデルで，65を見たときの推定が10を見たときより5ポイント以上高かった．答えを知っているモデルは，数字に引っぱられにくい．`)];
+    }};
+});
+
+Q.push(() => ({  // 3 リンダ
+  title: "リンダはどんな人？",
+  q: "リンダは31歳，独身で，率直に意見を言う，とても聡明な人です．大学では哲学を専攻しました．学生時代には差別や社会正義の問題に深い関心を持ち，反核デモにも参加していました．\n\n次のAとBのうち，可能性が高いのはどちらですか．",
+  options: [["A", "A：リンダは銀行員である．"], ["B", "B：リンダは銀行員で，フェミニスト運動に参加している．"]],
+  reveal(ans) {
+    const d = DATA.linda;
+    const n = countBy(d.models, m => m.conds.typical.v >= 50);
+    return [
+      el("p", {class: "you"}, `あなたは${ans}を選んだ．`),
+      el("p", {}, "「銀行員でフェミニスト」は「銀行員」の一部なので，確率はAの方が必ず高い．それでも人間の85%がBを選んだ（連言錯誤）．AIには人物の説明を「31歳，独身」だけにした版も出した．グラフはBを選んだ割合．"),
+      chart({conds: ["typical", "neutral"], labels: ["説明あり（上の問題）", "説明なし"], human: d.human, models: d.models, max: 100, fmt: pct}),
+      el("p", {class: "take"}, `説明ありの版で，Bを半分以上選んだのは12モデル中${n}モデル．`),
+      orderTable(d.models, ["typical", "neutral"], ["説明あり", "説明なし"], pct)];
+  }}));
+
+Q.push(() => ({  // 4 アレ
+  title: "2つのくじ",
+  q: "問1：次の2つのくじのうち，どちらを選びますか．\nA：確実に2,400円もらえる．\nB：33%の確率で2,500円，66%の確率で2,400円，1%の確率で何ももらえない．\n\n問2：次の2つのくじのうち，どちらを選びますか．\nC：34%の確率で2,400円，66%の確率で何ももらえない．\nD：33%の確率で2,500円，67%の確率で何ももらえない．",
+  pairs: [["問1", [["A", "A（確実に2,400円）"], ["B", "B（2,500円の賭け）"]]], ["問2", [["C", "C（34%で2,400円）"], ["D", "D（33%で2,500円）"]]]],
+  reveal(ans) {
+    const d = DATA.allais;
+    const n = countBy(d.models, m => m.conds.certain.v - m.conds.uncertain.v >= 10);
+    const consistent = (ans[0] === "A") === (ans[1] === "C");
+    return [
+      el("p", {class: "you"}, `あなたは問1で${ans[0]}，問2で${ans[1]}を選んだ．${consistent ? "2問の選び方は筋が通っている．" : "多くの人と同じく，2問で好みが入れ替わった．"}`),
+      el("p", {}, "問2は，問1の両方のくじから「66%で2,400円」を取り除いただけ．期待効用理論どおりなら，問1でAを選ぶ人は問2でCを選ぶはず．人間は問1でAを82%，問2でCを17%しか選ばなかった（確実性効果）．グラフは2,400円の側（AとC）を選んだ割合．"),
+      chart({conds: ["certain", "uncertain"], labels: ["問1（確実な案あり）", "問2"], human: d.human, models: d.models, max: 100, fmt: pct}),
+      el("p", {class: "take"}, `12モデル中${n}モデルで，問1の方が2,400円の側を10ポイント以上多く選んだ（人間と同じ向き）．`),
+      orderTable(d.models, ["certain", "uncertain"], ["問1", "問2"], pct)];
+  }}));
+
+Q.push(() => {  // 5 保有効果
+  const role = pick(["seller", "buyer"]);
+  return {
+    title: "マグカップの値段",
+    q: role === "seller"
+      ? "あなたは大学の売店で1,000円で売られている，大学のロゴ入りのマグカップを1つ持っています．これは先ほどあなたに配られたもので，あなたのものです．\n最低いくら払ってもらえれば，このマグカップを売りますか．"
+      : "隣の人は大学の売店で1,000円で売られている，大学のロゴ入りのマグカップを1つ持っていて，あなたは持っていません．\n最高いくらまでなら，このマグカップを買いますか．",
+    number: {label: "金額（円）", min: 0, max: 10000},
+    reveal(_, num) {
+      const d = DATA.endowment;
+      const n = countBy(d.models, m => m.conds.seller.v / m.conds.buyer.v >= 1.2);
+      const h = d.human;
+      return [
+        el("p", {class: "you"}, `あなたは${role === "seller" ? "売り手" : "買い手"}の立場で${Number(num).toLocaleString()}円と答えた．`),
+        el("p", {}, `この問題にも2つの版がある．同じマグカップでも，持っている人は手放す値段を高くつけ，持っていない人は買う値段を低くつける（保有効果）．元の実験の中央値は，売り手$${h.seller}，買い手$${h.buyer}で約${(h.seller / h.buyer).toFixed(1)}倍．グラフはAIの答えの中央値を店頭価格に対する割合で示した（店頭価格は5通り）．`),
+        chart({conds: ["seller", "buyer"], labels: ["売り手（持っている）", "買い手（持っていない）"], human: null, models: d.models,
+               max: Math.max(150, ...d.models.flatMap(m => ["seller", "buyer"].map(c => m.conds[c]?.v || 0))), fmt: v => v.toFixed(0) + "%", ref: 100, refLabel: "店頭価格"}),
+        el("p", {class: "take"}, `12モデル中${n}モデルで，売り手の値段が買い手の1.2倍以上だった．`)];
+    }};
+});
+
+/* ---------- 描画 ---------- */
+const quiz = document.getElementById("quiz");
+Q.forEach((make, i) => {
+  const q = make();
+  const card = el("section", {class: "card", id: "q" + (i + 1)});
+  card.append(el("h2", {}, el("span", {class: "no"}, `問題${i + 1}`), q.title));
+  card.append(el("p", {class: "q"}, q.q));
+  const name = "q" + i;
+  const groups = q.pairs || (q.options ? [["", q.options]] : []);
+  groups.forEach(([lab, opts], gi) => {
+    const box = el("div", {class: "opts", role: "radiogroup"});
+    if (lab) box.append(el("strong", {}, lab));
+    opts.forEach(([v, t], k) => box.append(el("label", {class: "opt", for: `${name}_${gi}_${k}`},
+      el("input", {type: "radio", name: `${name}_${gi}`, value: v, id: `${name}_${gi}_${k}`}), el("span", {}, t))));
+    card.append(box);
+  });
+  let numInput = null;
+  if (q.number) {
+    numInput = el("input", {type: "number", id: name + "_num", min: q.number.min, max: q.number.max, inputmode: "numeric"});
+    card.append(el("label", {class: "row", for: name + "_num"}, q.number.label, numInput));
+  }
+  const btn = el("button", {type: "button", disabled: ""}, "答えて結果を見る");
+  const res = el("div", {class: "result", hidden: ""});
+  const read = () => groups.map((_, gi) => card.querySelector(`input[name="${name}_${gi}"]:checked`)?.value);
+  const ready = () => {
+    const okR = read().every(Boolean);
+    const okN = !numInput || (numInput.value !== "" && +numInput.value >= q.number.min && +numInput.value <= q.number.max);
+    btn.disabled = !(okR && okN);
+  };
+  card.addEventListener("input", ready); card.addEventListener("change", ready);
+  btn.addEventListener("click", () => {
+    const r = read();
+    res.replaceChildren(...q.reveal(q.pairs ? r : r[0], numInput?.value));
+    res.hidden = false; btn.hidden = true;
+    card.querySelectorAll("input").forEach(x => x.disabled = true);
+  });
+  card.append(btn, res);
+  quiz.append(card);
+});
+if (!META.all_final) document.getElementById("pilotNote").hidden = false;
+document.getElementById("built").textContent = "集計日：" + META.built;
+</script>
+
+</html>
