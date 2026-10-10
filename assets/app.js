@@ -1,6 +1,20 @@
 "use strict";
 const PUBS = [{
   yr: 2026,
+  title: "Intergenerational Altruism and Sustainable Development: The Role of Descendants and Age Effects in Promoting Future Well-Being",
+  venue: "Sustainable Development e71631",
+  authors: "Y. Kamijo, A. Goto, T. Himichi",
+  tags: ["coop", "peer"],
+  badges: ["peer"]
+}, {
+  yr: 2026,
+  title: "Comparing human and AI emotional evaluations of images: GPT-4o performance across standard, persona, and language-specific prompting strategies",
+  venue: "BMC Psychology 14(1)",
+  authors: "M. Kobayashi, A. Goto, A. Himuro",
+  tags: ["ai", "peer"],
+  badges: ["peer"]
+}, {
+  yr: 2026,
   title: "経済ゲーム実験を用いたAIの社会性評価 ── 新たな定量評価指標の提案と検証",
   venue: "情報処理学会論文誌 67(5), pp.916-933",
   authors: "後藤 晶",
