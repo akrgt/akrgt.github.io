@@ -706,19 +706,10 @@ if (presRoot && window.PresApp) {
   if (!link) return;
   const u = ["a", "k", "i", "r", "a", "g", "o", "t", "o"].join("");
   const d = ["m", "e", "i", "j", "i", ".", "a", "c", ".", "j", "p"].join("");
-  const addr = u + "\u0040" + d;
-  function reveal(e) {
-    e && e.preventDefault();
-    link.textContent = addr;
-    link.href = "mailto:" + addr;
-    link.removeEventListener("click", reveal);
-  }
-  link.addEventListener("click", reveal);
-  link.addEventListener("mouseenter", () => {
-    link.textContent = addr;
-    link.href = "mailto:" + addr;
-  }, {
-    once: true
+  link.textContent = u + " [at] " + d;
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    window.location.href = "mai" + "lto:" + u + "\u0040" + d;
   });
 })();
 (function applyDefaults() {
