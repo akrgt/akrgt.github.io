@@ -670,7 +670,7 @@ if (presRoot && window.PresApp) {
   ReactDOM.createRoot(presRoot).render(React.createElement(PresApp, null));
 }
 (function navSpy() {
-  const links = Array.from(document.querySelectorAll("#topNav a"));
+  const links = Array.from(document.querySelectorAll('#topNav a[href^="#"]'));
   const sections = links.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
   function update() {
     const y = window.scrollY + 120;
