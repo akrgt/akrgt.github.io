@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>法人の方へ｜後藤 晶</title>
+<meta name="description" content="行動経済学・実験社会科学の知見を使った講演・研修，アドバイザリー，専門家インタビュー，記事の監修のご相談について">
+<link rel="canonical" href="https://akrgt.github.io/for-business/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'&gt;&lt;rect width='64' height='64' rx='10' fill='%238b3a2e'/&gt;&lt;text x='32' y='44' font-family='serif' font-size='38' font-weight='800' text-anchor='middle' fill='%23fbf9f4'&gt;後&lt;/text&gt;&lt;/svg&gt;">
+<link rel="stylesheet" href="../assets/fonts.css">
+<style>
+  /* トップページ（akrgt.github.io）と同じ色・書体・見出しの作り */
+  :root {
+    --bg: #f4f1ea; --bg-2: #ebe6db; --paper: #fbf9f4;
+    --ink: #1c1a17; --ink-2: #3a3631; --muted: #76706a; --rule: #d9d2c4;
+    --accent: #8b3a2e; --accent-soft: #c98a7a;
+    --sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    --latin: "Inter", "Noto Sans JP", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-feature-settings: "palt";
+    font-size: 16px; font-weight: 500; line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .topbar {
+    position: sticky; top: 0; z-index: 30;
+    backdrop-filter: blur(10px);
+    background: color-mix(in oklab, var(--bg) 80%, transparent);
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-inner {
+    max-width: 1320px; margin: 0 auto; padding: 14px 32px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .brand { display: flex; align-items: baseline; gap: 12px; font-weight: 700; text-decoration: none; }
+  .brand .ja { font-size: 17px; letter-spacing: 0.08em; }
+  .brand .en { font-family: var(--latin); font-size: 11px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
+  .top-nav { margin-left: auto; display: flex; gap: 22px; font-family: var(--latin); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .top-nav a { text-decoration: none; }
+  .top-nav a:hover { color: var(--accent); }
+  main { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 96px 0; border-top: 1px solid var(--rule); }
+  section.lead { border-top: 0; padding-top: 80px; }
+  .eyebrow { font-family: var(--latin); font-size: 11px; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; }
+  .lead h1 { font-weight: 700; font-size: clamp(36px, 6vw, 64px); line-height: 1.2; margin: 12px 0 24px; letter-spacing: 0.02em; }
+  .lead p { font-size: clamp(18px, 2.2vw, 24px); line-height: 1.8; max-width: 34em; margin: 0; color: var(--ink-2); text-wrap: pretty; }
+  .section-head { display: grid; grid-template-columns: 180px 1fr; gap: 48px; margin-bottom: 48px; align-items: baseline; }
+  .section-num { font-family: var(--latin); font-size: 11px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+  .section-title { font-weight: 700; font-size: 38px; line-height: 1.2; margin: 0 0 8px; letter-spacing: 0.01em; }
+  .section-num::before { content: ""; display: inline-block; width: 28px; height: 1px; background: var(--accent); vertical-align: middle; margin-right: 12px; }
+  .section-title .en { display: block; font-family: var(--latin); font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-top: 6px; }
+  .top-nav a.active { color: var(--ink); }
+  .lang-toggle { border: 1px solid var(--rule); border-radius: 999px; padding: 4px 10px; font-family: var(--latin); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; }
+  .body { margin-left: 228px; }
+  .intro { margin: 0 0 28px; font-size: 18px; color: var(--ink-2); }
+  .themes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); }
+  .theme { padding: 28px 28px 28px 0; border-bottom: 1px solid var(--rule); }
+  .theme:nth-child(odd) { border-right: 1px solid var(--rule); }
+  .theme:nth-child(even) { padding-left: 28px; }
+  .theme:last-child:nth-child(odd) { border-right: 0; }
+  .theme .no { font-family: var(--latin); font-size: 11px; letter-spacing: 0.2em; color: var(--accent); }
+  .theme h3 { font-size: 22px; margin: 6px 0 10px; line-height: 1.45; font-weight: 700; }
+  .theme p { margin: 0; color: var(--ink-2); }
+  .forms { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .forms li { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .forms b { font-weight: 700; }
+  .forms span { color: var(--ink-2); }
+  .policy { background: var(--paper); border: 1px solid var(--rule); border-left: 3px solid var(--accent); padding: 24px 28px; color: var(--ink-2); }
+  .steps { margin: 0 0 32px; padding-left: 1.2em; color: var(--ink-2); }
+  .steps li { margin: 6px 0; }
+  .ext-link {
+    display: inline-block; font-family: var(--latin); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 10px 18px; border: 1px solid var(--ink); color: var(--ink); text-decoration: none; transition: all .2s;
+  }
+  .ext-link:hover { background: var(--ink); color: var(--paper); }
+  footer { border-top: 1px solid var(--rule); padding: 48px 32px 56px; }
+  .footer-inner { max-width: 1320px; margin: 0 auto; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; }
+  .copy { font-family: var(--latin); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); }
+  @media (max-width: 960px) {
+    .section-head { grid-template-columns: 1fr; gap: 8px; margin-bottom: 32px; }
+    .body { margin-left: 0; }
+    .section-title { font-size: 30px; }
+    section { padding: 64px 0; }
+  }
+  @media (max-width: 640px) {
+    .topbar-inner, main, footer { padding-left: 16px; padding-right: 16px; }
+    .brand .en, .top-nav { display: none; }
+    .themes { grid-template-columns: 1fr; }
+    .theme, .theme:nth-child(odd), .theme:nth-child(even) { padding: 24px 0; border-right: 0; }
+    .forms li { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../">
+      <span class="ja">後藤 晶</span>
+      <span class="en">Akira Goto ／ BEER Lab</span>
+    </a>
+    <nav class="top-nav">
+      <a href="../#about">About</a>
+      <a href="../#research">Research</a>
+      <a href="../#publications">Publications</a>
+      <a href="../#impact">Impact</a>
+      <a href="./" class="active">Business</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+
+<section class="lead">
+  <div class="eyebrow">For Business</div>
+  <h1>法人の方へ</h1>
+  <p>人がなぜその選択をするのかを，実験とデータで確かめてきました．その知見を，講演・研修や意思決定の助言の形でお届けします．</p>
+</section>
+
+<section>
+  <div class="section-head">
+    <div class="section-num">§ 01</div>
+    <div><h2 class="section-title">ご相談いただけるテーマ<span class="en">Themes</span></h2></div>
+  </div>
+  <div class="body">
+    <p class="intro">下記は一例です．行動経済学に関わるテーマ全般について，ご相談に応じます．</p>
+    <div class="themes">
+      <div class="theme"><div class="no">01</div><h3>意思決定とバイアス</h3><p>損失回避，現在バイアス，アンカリング．人の判断の癖を，自社の商品・業務の場面に引きつけてお話しします．行動経済学の入門にも．</p></div>
+      <div class="theme"><div class="no">02</div><h3>価格・マーケティングと消費者行動</h3><p>値付け，選択肢の見せ方，定期購入や解約の設計．買い手がどう感じ，どう選ぶかを実験の知見から考えます．</p></div>
+      <div class="theme"><div class="no">03</div><h3>人事・組織とインセンティブ</h3><p>評価や報酬は人をどう動かすのか．協力，公平感，やる気をそぐ仕組みについて．</p></div>
+      <div class="theme"><div class="no">04</div><h3>ナッジと行動変容</h3><p>健康，環境，行政手続き．手続きの負担（スラッジ）を減らし，望ましい行動を後押しする設計と，効果の確かめ方．</p></div>
+      <div class="theme"><div class="no">05</div><h3>AIと人間の意思決定</h3><p>人はAIの助言をどこまで信じるのか．AIに任せると判断はどう変わるのか．人とAIを同じ場で比べる実験の知見から．</p></div>
+      <div class="theme"><div class="no">06</div><h3>ダークパターンと消費者保護</h3><p>利用者を欺く画面設計とは何か．国内外の規制の動向と，信頼を損なわない画面づくりの考え方．</p></div>
+      <div class="theme"><div class="no">07</div><h3>調査と実験の設計</h3><p>アンケートや A/B テストを，結論を誤らない形で組む．AIに回答させる調査の使いどころと限界．</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <div class="section-num">§ 02</div>
+    <div><h2 class="section-title">お引き受けしている形<span class="en">Engagements</span></h2></div>
+  </div>
+  <div class="body">
+    <ul class="forms">
+      <li><b>講演・社内研修</b><span>オンライン可．60分から半日まで</span></li>
+      <li><b>アドバイザリー</b><span>月1〜2回の打ち合わせ</span></li>
+      <li><b>専門家インタビュー</b><span>スポットでのご質問</span></li>
+      <li><b>記事・コンテンツの監修</b><span>行動経済学・心理学に関わる内容</span></li>
+      <li><b>共同研究</b><span>所属大学を通じた契約</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <div class="section-num">§ 03</div>
+    <div><h2 class="section-title">ご依頼の流れ<span class="en">How to request</span></h2></div>
+  </div>
+  <div class="body">
+    <ol class="steps">
+      <li>メールで，ご所属・ご相談の内容・ご希望の時期をお知らせください．</li>
+      <li>内容を確認のうえ，お引き受けの可否と条件をご連絡します．お引き受けは，所属大学の規程に沿って行います．</li>
+    </ol>
+    <a class="ext-link" href="../#contact">Contact →</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="copy">© 2026 Akira Goto ／ BEER Lab, School of Information and Communication, Meiji University.</div>
+  </div>
+</footer>
+
+</body>
+</html>
