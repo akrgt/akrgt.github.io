@@ -1052,6 +1052,20 @@
   .top-nav { gap: 17px; }
   @media (max-width: 1250px) { .brand .en { display: none; } .top-nav { gap: 13px; } }
   @media (max-width: 1080px) { .top-nav { gap: 10px; font-size: 10.5px; letter-spacing: 0.04em; } .topbar-inner { gap: 14px; } }
+  .wip { padding: 56px 0 72px; border-top: 1px solid var(--rule); }
+  .wip-head { display: grid; grid-template-columns: 180px 1fr; gap: 0 48px; align-items: baseline; margin-bottom: 28px; }
+  .wip-label { font-family: var(--latin); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); grid-row: span 2; }
+  .wip-h { font-family: var(--serif); font-weight: 700; font-size: 28px; line-height: 1.3; margin: 0; }
+  .wip-lead { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
+  .wip-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .wip-card { display: flex; flex-direction: column; gap: 10px; padding: 24px; background: var(--paper); border: 1px solid var(--rule); border-top: 3px solid var(--accent); color: var(--ink); text-decoration: none; transition: border-color .2s, transform .2s; }
+  .wip-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .wip-kind { font-size: 11px; letter-spacing: 0.12em; color: var(--muted); }
+  .wip-title { font-family: var(--serif); font-size: 20px; font-weight: 700; line-height: 1.4; }
+  .wip-title small { font-size: 13px; font-weight: 400; color: var(--muted); margin-left: 4px; }
+  .wip-desc { font-size: 14px; line-height: 1.8; color: var(--ink-2, var(--ink)); flex: 1; }
+  .wip-go { font-size: 13px; color: var(--accent); letter-spacing: 0.04em; }
+  @media (max-width: 960px) { .wip-head { grid-template-columns: 1fr; } .wip-label { grid-row: auto; margin-bottom: 6px; } .wip-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -1111,6 +1125,11 @@
     <div class="value">博士（情報コミュニケーション学）<small>Doctor of Information and Communication</small></div>
   </div>
 </section>
+
+<div class="wip">
+  <div class="wip-head"><span class="wip-label">Work in progress</span><h2 class="wip-h">執筆中の本</h2><p class="wip-lead">本の草稿の一部を公開しています。ご意見や出版のご相談をお待ちしています。</p></div>
+  <div class="wip-grid"><a class="wip-card" href="book-ai/"><span class="wip-kind">一般向け（新書）</span><span class="wip-title">AIと行動経済学<small>（書名未定）</small></span><span class="wip-desc">AI に人間と同じ心理テストや経済ゲームを解かせると、人間と同じように間違えるのか。行動経済学の実験の結果で確かめます。</span><span class="wip-go">第1章の草稿を読む →</span></a><a class="wip-card" href="book-darkpattern/"><span class="wip-kind">一般向け（新書）</span><span class="wip-title">ダークパターンと行動経済学<small>（書名未定）</small></span><span class="wip-desc">通販や定額サービスの画面にひそむ「だます設計」を、買う側の読者に向けて、研究で分かっていることから読み解きます。</span><span class="wip-go">第2章の草稿（一部）を読む →</span></a><a class="wip-card" href="book-nudge/"><span class="wip-kind">教科書</span><span class="wip-title">ナッジと行動公共政策<small>（仮題）</small></span><span class="wip-desc">行動経済学の知見で人々の選択を後押しするナッジと、それを公共政策に生かす方法を学ぶ大学向けの教科書です。</span><span class="wip-go">第1章の草稿を読む →</span></a></div>
+</div>
 
 <!-- ============ ABOUT / LEDE ============ -->
 <section id="lede">
@@ -1272,17 +1291,6 @@
       <div class="b-meta">
         <span class="b-pub">コロナ社</span>
         <span class="b-kind">単著</span>
-      </div>
-    </div>
-  <div class="book-row">
-      <div class="b-yr">執筆中</div>
-      <div class="b-main">
-        <div class="b-name">AIと行動経済学の一般向けの本（書名未定）</div>
-        <div class="b-sub">行動経済学の実験で AI の判断の癖を確かめる</div>
-        <a class="book-support-link" href="book-ai/">第1章の草稿を読む →</a>
-      </div>
-      <div class="b-meta">
-        <span class="b-kind">単著・草稿</span>
       </div>
     </div>
   </div>

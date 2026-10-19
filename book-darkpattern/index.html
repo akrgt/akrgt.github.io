@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>執筆中の本　第2章 あおる｜後藤晶</title>
+<meta name="description" content="ダークパターン（だます画面の設計）を行動経済学で読み解く一般向けの本を執筆中です．第2章の一部の草稿を公開しています．">
+<link rel="canonical" href="https://akrgt.github.io/book-darkpattern/">
+<meta property="og:title" content="執筆中の本　第2章 あおる">
+<meta property="og:description" content="ダークパターンを行動経済学で読み解く一般向けの本の，第2章の一部の草稿です．">
+<meta property="og:url" content="https://akrgt.github.io/book-darkpattern/">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="../assets/fonts.css">
+<style>
+:root {
+  --bg: #f4f1ea; --paper: #fbf9f4; --ink: #1c1a17; --muted: #76706a;
+  --rule: #d9d2c4; --accent: #8b3a2e; --accent-soft: #b86d5b;
+  --sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  --latin: "Inter", "Noto Sans JP", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14130f; --paper: #1a1814; --ink: #f1ece1; --muted: #8b8478;
+    --rule: #2e2a23; --accent: #d97a66; --accent-soft: #c98a7a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14130f; --paper: #1a1814; --ink: #f1ece1; --muted: #8b8478;
+  --rule: #2e2a23; --accent: #d97a66; --accent-soft: #c98a7a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--sans); font-size: 17px; line-height: 2; font-weight: 400;
+  -webkit-text-size-adjust: 100%;
+}
+.wrap {
+  max-width: 44rem; margin: 0 auto;
+  padding-block: 40px 80px;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+.back { font-family: var(--latin); font-size: 14px; color: var(--muted); text-decoration: none; }
+.back:hover { color: var(--accent); }
+.label {
+  margin: 48px 0 8px; font-family: var(--latin); font-size: 13px;
+  letter-spacing: .12em; color: var(--accent);
+}
+h1 { margin: 0 0 24px; font-size: clamp(26px, 5vw, 34px); line-height: 1.5; font-weight: 500; text-wrap: balance; }
+.lead { color: var(--muted); font-size: 15px; line-height: 1.9; }
+.about {
+  margin: 32px 0 48px; padding: 20px 24px; background: var(--paper);
+  border: 1px solid var(--rule); border-radius: 4px; font-size: 15px; line-height: 1.9;
+}
+.about h2 { margin: 0 0 8px; font-size: 15px; font-weight: 500; border: 0; padding: 0; }
+.about ol { margin: 0 0 16px; padding-left: 0; list-style: none; }
+.about p { margin: 0 0 12px; text-indent: 0; }
+.about p:last-child { margin-bottom: 0; }
+.toc { margin: 0 0 40px; padding: 0; list-style: none; font-size: 15px; border-top: 1px solid var(--rule); }
+.toc li { border-bottom: 1px solid var(--rule); }
+.toc a { display: block; padding: 8px 0; color: var(--ink); text-decoration: none; }
+.toc a:hover { color: var(--accent); }
+article h2 {
+  margin: 64px 0 16px; padding-top: 16px; border-top: 1px solid var(--rule);
+  font-size: 22px; line-height: 1.6; font-weight: 500; text-wrap: balance;
+}
+article h3 { margin: 40px 0 8px; font-size: 18px; line-height: 1.6; font-weight: 500; color: var(--accent); }
+article p { margin: 0 0 1em; text-indent: 1em; }
+.refs { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--rule); }
+.refs h2 { margin: 0 0 16px; font-size: 18px; font-weight: 500; }
+.refs ol { margin: 0; padding-left: 1.6em; font-family: var(--latin); font-size: 14px; line-height: 1.75; color: var(--muted); }
+article ul { padding-left: 1.4em; margin: 0 0 1em; }
+article ul li { margin-bottom: 6px; }
+.refs li { margin-bottom: 10px; overflow-wrap: anywhere; }
+footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); line-height: 1.9; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../">← 後藤晶 ホーム</a>
+
+<p class="label">WORK IN PROGRESS ／ 執筆中の本</p>
+<h1>第2章　あおる</h1>
+<p class="lead">後藤晶（明治大学）　2026年10月19日 草稿（章の一部）</p>
+
+<section class="about">
+<h2>この本について</h2>
+<p>通販や定額サービスの画面にひそむ「だます設計」（ダークパターン）を，買う側の読者に向けて，行動経済学の研究で読み解く一般向けの本を書いています．研究で確かめられたこと，別の場面からの類推，まだ分かっていないことを書き分けます．ここでは第2章「あおる」の一部（導入，2つの節，章末の確認事項）の草稿を公開します．</p>
+<h2>目次（案）</h2>
+<ol>
+<li>序章　解約ボタンはどこへ消えたのか</li>
+<li>第1章　だます画面をどう見分けるか</li>
+<li>第2章　あおる</li>
+<li>第3章　こっそり足す</li>
+<li>第4章　選ばせる</li>
+<li>第5章　逃がさない</li>
+<li>第6章　知っていても防ぎきれない理由</li>
+<li>第7章　被害とルール</li>
+<li>第8章　申し込む前，困った後</li>
+<li>終章　だます設計は減っていくのか</li>
+</ol>
+<p>草稿のため，今後書き直します．ご意見や，出版についてのご相談は akiragoto [at] meiji.ac.jp までお寄せください．</p>
+</section>
+
+<ol class="toc"><li><a href="#s1">1　宿を探す夜</a></li><li><a href="#s2">2　「あと5分」「本日限り」</a></li><li><a href="#s3">3　「残り1室」</a></li><li><a href="#s4">この場面で確認すること</a></li></ol>
+
+<article>
+<h2 id="s1">1　宿を探す夜</h2>
+<p>金曜の夜，来月の連休に泊まる宿を探している．旅行予約サイトに日付と人数を入れると，候補が並ぶ．駅から近く，値段も手ごろな宿を開く．部屋の写真の横に，赤い字で「この料金で残り1室」とある．その下では「このセールは残り 00:04:58 で終了します」と数字が減っていく．画面を少し送ると，「いま12人がこの宿を見ています」と出る．</p>
+<p>ほかの宿と比べるつもりだった．口コミも読むつもりだった．同行する家族に日程を確かめるつもりでもあった．ところが，指はもう「予約に進む」を押している．取消料がいつからかかるのかは読んでいない．</p>
+<p>予約を済ませたあとで，少し落ち着かない気持ちになる．本当に残り1室だったのか．あのセールは本当に5分で終わったのか．翌朝，同じ宿のページを開いてみる．「この料金で残り1室」は，まだそこにある．残り時間の数字は，また5分から減りはじめている．</p>
+<p>これは，よくある経験を組み合わせて作った場面である．特定のサイトを指してはいない．ただし，材料は実際の調査から取っている．欧州委員会と各国の消費者保護当局は，小売の通販サイト399を点検し，2023年1月に結果を公表した．42のサイトが，購入の期限を示す偽の残り時間表示を使っていた（欧州委員会 2023）．米国の研究チームは，英語の通販サイト約1万1,000を自動で巡回して，1,254のサイトで手口を見つけた．最も多かったのは「在庫わずか」の表示で，632件あった（マートゥールほか 2019）．日本でも消費者庁が2019年，チケットの転売を仲介するサイトについて注意を呼びかけている．購入の画面に残り時間が表示され，利用者が急がされるという内容だった（消費者庁 2019）．</p>
+<p>冒頭の画面をもう一度見てほしい．「残り1室」も「残り5分」も，宿そのものについては何も言っていない．部屋の広さも，朝食の中身も，駅からの距離も，表示の前と後で変わらない．変わったのは，「いま決めないと失う」という見通しだけである．</p>
+<p>この章では，買い手にこの見通しを持たせる表示を扱う．商品を見ているときに出会う手口である．本書ではまとめて「あおる」と呼ぶ．この章ではまず2つ，時間を区切る表示と，数の少なさを訴える表示である．</p>
+<p>先に，この章の結論を言っておく．あおる表示について，研究はきれいな答えを出していない．効くという結果も，効かなかったという結果もある．それでもこの章を書く理由は，効き目の大きさとは別のところにある．表示が本当かどうかを，買い手が確かめられないことである．</p>
+<h2 id="s2">2　「あと5分」「本日限り」</h2>
+<p>時間を区切る表示には，いくつかの形がある．「終了まで 02:14:37」と時・分・秒が減っていく残り時間の表示．「本日限り」「今週末まで」のような期間限定．「いまだけ」「まもなく終了」のように，いつ終わるのかを書かない文言もある．</p>
+<p>売り手がこうした表示を使うのは，効くと考えられているからである．では，実際に効くのか．</p>
+<p>まず，全体を見渡した研究がある．オーストラリアの研究チームは，品薄や期限を知らせる表示の効果を調べた131の研究を集め，416の結果を束ねて分析した（バートンほか 2022）．買う意向を尋ねた193の結果，のべ約2万2,000人分を合わせると，品薄や期限を知らせた場合のほうが，知らせない場合より買う意向が高かった．差の大きさは，研究どうしを比べるための目盛りで0.31である．大きな差ではないが，偶然とは考えにくい．時間を区切る表示だけを取り出しても，0.34の差があった．</p>
+<p>つまり，「限定」と言われると欲しくなるという直感は，研究を束ねた結果とも合っている．</p>
+<p>ただし，この数字には2つの但し書きが付く．1つは，測っているのがほとんど「買う意向」だという点である．193の結果のうち178は，架空の広告や商品を見せて「買いたいと思うか」を尋ねた研究だった．実際の品物や購入を使った研究は15にとどまる．両者のあいだに差は見つかっていないが，実際の購入を扱った研究が少ないことは覚えておきたい．もう1つは，効き方が条件で変わる点である．商品の種類や限定の理由によって，差は大きくも小さくもなった．</p>
+<p>なぜ意向が高まるのか．手がかりになる考え方は2つある．1つは，失うことの重さである．人は，同じ大きさの得と損を比べると，損のほうを重く感じる傾向がある（カーネマンとトベルスキー 1979）．期限は，「買えば得をする」話を「買わなければ損をする」話に変える．値引きは，手に入るものから，失うものになる．もう1つは，探すのをやめることである．その場で決めないと消える値段を示されると，もっと安い店を探しに行くことは賭けになる．英国の研究チームの実験では，参加者はこうした小さな賭けを避ける傾向を見せた（サグデンほか 2019）．ただし，この実験には意外な結果もある．期限つきの値段は，決める時間が短いときより，長いときのほうがよく選ばれた．急がされたから飛びついた，という話にはなっていない．どちらも通販の残り時間の表示そのものを調べた研究ではない．考える手がかりとして挙げておく．損を重く感じる傾向についても，いつでも成り立つわけではないという批判がある（ガルとラッカー 2018）．</p>
+<p>では，通販の画面ではどうか．ここで話は少しややこしくなる．</p>
+<p>米国の研究チームは，時間限定の販促が店頭とオンラインで同じように効くのかを調べた（フムロビッチほか 2023）．過去の研究から比べられる38の結果を集めると，店頭では時間限定が買う意向を押し上げていた．オンラインでは，はっきりした効果は確認できなかった．チームは自分たちでも実験をしている．同じ本の同じ販促を，店頭を模した場面とオンラインを模した場面で見せ，いくらなら払うかを尋ねた．店頭の場面では，「期間限定」と添えたほうが，払ってもよい額が高かった（15.15ドルと13.63ドル）．オンラインの場面では差が無かった（12.83ドルと13.53ドル）．</p>
+<p>チームはその理由を，買い手の受け取り方に求めている．オンラインの「期間限定」は，売り手が自分の都合で急がせていると受け取られやすい．そこで，期限に売り手の都合ではない理由を添えてみた．祝日が近い，誕生日の特典である，といった理由である．音楽教室の会員約9,400人に送った販促のメールでは，祝日を理由にした時間限定の文面のほうが，限定の無い文面より開かれた（12.07％と9.80％）．もっとも，集められた過去の研究は38の結果にとどまり，店頭とオンラインを直接比べたものは無かった．チーム自身も，オンラインでは常に効かないとまでは言っていない．</p>
+<p>残り時間の表示そのものを試した実験もある．オランダの研究チームは，模擬の通販サイトで245人に事務用の椅子を選んでもらった（ティーメッセンほか 2023）．参加者は3つの組に分けられた．何の特典も無い組，片方の椅子に値引きが付く組，値引きに加えて残り時間の表示が付く組である．この残り時間は，ゼロになっても値引きが終わらない偽物だった．値引きされた椅子を選んだ人は，特典の無い組で17.3％，値引きだけの組で56％，偽の残り時間つきの組で45.6％だった．値引きは効いた．しかし偽の残り時間は，値引きに何も上乗せしなかった．あとで偽物だと知らされた参加者は，この表示を「操作的だ」「倫理に反する」と評した．探索的な実験で，参加者が早く終えようと急いでいた可能性があると著者たちも断っている．</p>
+<p>もう1つ，米国の研究者による大規模な実験がある（ルグリとストラヒレヴィッツ 2021）．買い物の場面ではない．調査に答えた人に，個人情報を守る有料サービスへの加入を勧める場面である．何も足さない場合，加入を受け入れた人は14.8％だった．「お急ぎください．残りは3名分で，この案内は60秒で終わります」という文言と1分の残り時間の表示を足した場合は14.3％で，差は無かった．同じ実験で，他人の加入状況を見せると22.1％に，料金の説明を目立たなくすると30.1％に上がっている．ここでは，数と時間の両方であおっても効かなかったことになる．著者たちは，この種の文言は売り手にとって逆効果になりうるとまで書いている．</p>
+<p>当局による整理も，同じ絵を描いている．英国の競争・市場庁は2022年，画面の設計が消費者に与える影響についての研究を，手口ごとにまとめた証拠レビューを公表した．このレビューによれば，品薄や期限を知らせる表示は，お得だという感じ方や買う意向を高め，探す時間を短くすると報告した研究が多い．通販サイトの利用者1,000人あまりを対象にした実地の実験では，在庫わずかの表示も，よく売れているという表示も，品物をかごに入れる操作を増やしたという．宿の予約では，事業者が運営する予約サイトでは表示が予約の意向を高め，個人どうしの貸し借りのサイトでは効果が無かったという研究が紹介されている．一方で，在庫わずかの表示だけでは予約の意向は変わらなかったという実験や，先ほどの加入の勧誘の実験も，同じ箇所に並んでいる．レビューの見立ては，効き目は使われる場面に左右されるだろう，というものである（英国競争・市場庁 2022）．ここに挙げた個々の研究は，本書では原典を確かめていない．当局の整理として紹介しておく．</p>
+<p>並べてみると，こうなる．研究を束ねれば，限定の表示は買う意向を高める．店頭では効く．オンラインでは，効いたという結果と，効かなかったという結果の両方がある．効くかどうかは，商品，場面，理由の付け方で変わる．</p>
+<p>急がされた人の頭の中で何が起きるのかも，まだよく分かっていない．ドイツの研究チームは，192人に，次々に示される値段のどこで買うかを決める課題をしてもらった（クリムほか 2023）．時間を厳しく区切ると，決めるまでの時間は短くなり，うまく決められたという感覚は下がった．しかし，どこまで探すかは，全体としては変わらなかった．早く買ってしまったのは，こうした課題にごく不慣れな人だけだった．これは買い物の画面の実験ではないので，そのまま通販に当てはめることはできない．それでも，「急がせれば誰でも判断を誤る」と言い切れないことは分かる．</p>
+<p>では，効き目がはっきりしないなら，気にしなくてよいのか．そうはならない．理由は2つある．</p>
+<p>1つは，表示に偽りが混ざっていることである．冒頭で触れた欧州の点検では，399のうち42のサイトで，残り時間の表示が偽物だった．偽の残り時間は，ゼロになっても何も終わらないか，ページを開き直すとまた最初から数えはじめる（ティーメッセンほか 2023）．もう1つは，買い手にはそれを見分ける手段がほとんど無いことである．本当に今日で終わるセールと，毎日「本日限り」と出るセールは，その日の画面では同じに見える．</p>
+<p>本当の期限は，役に立つ情報である．明日には値段が戻ると分かっていれば，今日決める理由になる．問題は，役に立つ情報と同じ顔をした偽物が混ざり，買い手の側からは区別できないことにある．効き目が小さいとしても，偽りの表示を信じて急いだ人は，比べる時間を失っている．</p>
+<h2 id="s3">3　「残り1室」</h2>
+<p>数の少なさを訴える表示も，形はさまざまである．「残り3点」「在庫わずか」「この料金で残り1室」「売り切れ間近」．先に挙げた米国の調査で最も多く見つかったのが，この種類だった（マートゥールほか 2019）．</p>
+<p>数が少ないと聞くと欲しくなる．この傾向を確かめた古い実験がある．1975年，米国の心理学者たちは，女子学生146人にクッキーを味見してもらった（ウォーチェルほか 1975）．クッキーは瓶に入っている．ある学生の瓶にはたくさん入っていて，別の学生の瓶には少ししか入っていない．中身は同じクッキーである．それでも，少ししか入っていない瓶のクッキーのほうが，望ましいと評価された．</p>
+<p>この実験には続きがある．最初はたくさんあったクッキーが，途中で少なくなる条件が作られた．はじめから少ない場合より，途中で減った場合のほうが，クッキーの評価は高かった．さらに，減った理由も変えてある．「欲しがる人が多くて減った」と説明された場合は，「手違いで減った」と説明された場合より，評価が高かった．</p>
+<p>この結果は，「残り1室」の表示を考える手がかりになる．数が少ないという事実だけでなく，「みんなが取ったから少ない」という理由が，品物をよく見せる．「残り1室」と「12人が見ています」が並んで出てくるのは，偶然ではないのかもしれない．ただし，これは半世紀前の実験室で，クッキーを使って確かめたことである．通販の画面で同じことが起きると証明したものではない．</p>
+<p>通販の場面で試した実験もある．米国の研究チームは，架空の通販サイトで健康食品を1つ見せ，いますぐ買いたいという気持ちの強さを尋ねた（シンほか 2025）．商品の説明だけを見た人の平均は，7段階で3.78だった．「残り5点．ご注文はお早めに」と添えられた人は4.22，「人気商品です．ご注文はお早めに」と添えられた人は4.31だった．どちらも，何も添えない場合より高い．ここでは，あおる表示は効いている．もっとも，測ったのは気持ちの強さで，実際に買ったかどうかではない．著者たちも，これは不完全な代わりの物差しだと認めている．</p>
+<p>前の節で見た研究の束も，同じ方向を指している．売り手が数を絞っていると知らせる表示では，買う意向の差が0.39あった．よく売れていて残りが少ないと知らせる表示では0.28だった（バートンほか 2022）．一方で，前の節で見た加入の勧誘の実験では，「残りは3名分」と訴えても加入は増えなかった．数の少なさを訴える表示も，いつでも効くわけではない．</p>
+<p>売り手にとっての代償もある．ルクセンブルクの研究チームは，202人に模擬の通販サイトを使ってもらった（トゥンジェルほか 2024）．残り時間の表示がある画面，在庫わずかの表示がある画面，どちらも無い画面の3つである．表示のある画面を使った人は，どちらの場合も，売り手の善意を低く評価した．あおれば買ってもらえるかもしれないが，信用は減る．</p>
+<p>ここまでは，表示が本当かどうかを問わずに話を進めてきた．しかし買い手にとって大事なのは，そこである．</p>
+<p>本当に最後の1室なら，「残り1室」は役に立つ．迷っているうちに埋まってしまうことを，先に教えてくれるからである．困るのは，本当かどうかを確かめられないことだ．宿の空き部屋の数は，売り手にしか見えない．「この料金で残り1室」と書いてあっても，同じ部屋が別の料金でいくつ残っているのかは分からない．</p>
+<p>米国の調査チームは，サイトの裏側の仕組みまで調べて，在庫の数が決まった間隔で規則的に減っていく表示や，でたらめな数を作って見せている表示を見つけている（マートゥールほか 2019）．英国では2019年，競争当局が宿泊予約サイト6社から，空き状況や人気について誤った印象を与えないという約束を取り付けた．当局は違反を認定したわけではないが，表示のしかたを改めるよう求めた（英国競争・市場庁 2019）．</p>
+<p>買い手が画面の外で確かめられることは少ない．だから，この種の表示については，効くか効かないかより先に，本当かどうかが問われる．</p>
+<h2 id="s4">この場面で確認すること</h2>
+<p>あおる表示に出会ったら，次の3つを試してほしい．どれも1分でできる．</p>
+<ul><li>ページを開き直す．残り時間が最初の数字に戻るなら，その期限は本物ではない．</li><li>日を変えて見る．急がない買い物なら，翌日に同じページを開く．「本日限り」が今日も出ていれば，明日も出る．</li><li>表示を隠して考える．「残り1室」も「残り5分」も無かったとして，この値段でこの品物を買うかどうかを自分に問う．答えが「買う」なら，急いで買っても損は無い．答えに詰まるなら，表示に押されている．</li></ul>
+<p>3つとも，表示が本当かどうかを完全に確かめる方法ではない．売り手の在庫は，買い手からは見えないままである．それでも，偽の期限の多くは，開き直すだけで見破れる．</p>
+</article>
+
+<section class="refs">
+<h2>この草稿で触れた文献</h2>
+<ol>
+<li>Barton, Belinda, Zlatevska, Natalina, and Oppewal, Harmen (2022). Scarcity tactics in marketing: A meta-analysis of product scarcity effects on consumer purchase intentions. Journal of Retailing, 98(4), 741–758. DOI: <a href="<a href="https://doi.org/10.1016/j.jretai.2022.06.003">10.1016/j.jretai.2022.06.003</a>">https://doi.org/10.1016/j.jretai.2022.06.003">10.1016/j.jretai.2022.06.003</a></a></li>
+<li>Competition and Markets Authority (2019). Hotel booking sites to make major changes after CMA probe（2019年2月6日発表）. <a href="https://www.gov.uk/government/news/hotel-booking-sites-to-make-major-changes-after-cma-probe">https://www.gov.uk/government/news/hotel-booking-sites-to-make-major-changes-after-cma-probe</a>（閲覧日 2026年10月19日）</li>
+<li>Competition and Markets Authority (2022). Evidence review of online choice architecture and consumer and competition harm（CMA157，2022年4月5日）. <a href="https://www.gov.uk/government/publications/online-choice-architecture-how-digital-design-can-harm-competition-and-consumers/evidence-review-of-online-choice-architecture-and-consumer-and-competition-harm">https://www.gov.uk/government/publications/online-choice-architecture-how-digital-design-can-harm-competition-and-consumers/evidence-review-of-online-choice-architecture-and-consumer-and-competition-harm</a>（閲覧日 2026年10月19日）</li>
+<li>European Commission (2023). Consumer protection: Manipulative online practices found on 148 out of 399 online shops screened（Press release IP/23/418，2023年1月30日）. <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_23_418">https://ec.europa.eu/commission/presscorner/detail/en/ip_23_418</a>（閲覧日 2026年10月19日）</li>
+<li>Gal, David, and Rucker, Derek D. (2018). The loss of loss aversion: Will it loom larger than its gain? Journal of Consumer Psychology, 28(3), 497–516. DOI: <a href="<a href="https://doi.org/10.1002/jcpy.1047">10.1002/jcpy.1047</a>">https://doi.org/10.1002/jcpy.1047">10.1002/jcpy.1047</a></a></li>
+<li>Hmurovic, Jillian, Lamberton, Cait, and Goldsmith, Kelly (2023). Examining the efficacy of time scarcity marketing promotions in online retail. Journal of Marketing Research, 60(2), 299–328（オンライン公開2022）. DOI: <a href="<a href="https://doi.org/10.1177/00222437221118856">10.1177/00222437221118856</a>">https://doi.org/10.1177/00222437221118856">10.1177/00222437221118856</a></a></li>
+<li>Kahneman, Daniel, and Tversky, Amos (1979). Prospect theory: An analysis of decision under risk. Econometrica, 47(2), 263–291. DOI: <a href="<a href="https://doi.org/10.2307/1914185">10.2307/1914185</a>">https://doi.org/10.2307/1914185">10.2307/1914185</a></a></li>
+<li>Klimm, Felix, Kocher, Martin G., Opitz, Timm, and Schudy, Simeon (2023). Time pressure and regret in sequential search. Journal of Economic Behavior &amp; Organization, 206, 406–424. DOI: <a href="<a href="https://doi.org/10.1016/j.jebo.2022.12.019">10.1016/j.jebo.2022.12.019</a>">https://doi.org/10.1016/j.jebo.2022.12.019">10.1016/j.jebo.2022.12.019</a></a></li>
+<li>Luguri, Jamie, and Strahilevitz, Lior Jacob (2021). Shining a light on dark patterns. Journal of Legal Analysis, 13(1), 43–109. DOI: <a href="<a href="https://doi.org/10.1093/jla/laaa006">10.1093/jla/laaa006</a>">https://doi.org/10.1093/jla/laaa006">10.1093/jla/laaa006</a></a></li>
+<li>Mathur, Arunesh, Acar, Gunes, Friedman, Michael J., Lucherini, Eli, Mayer, Jonathan, Chetty, Marshini, and Narayanan, Arvind (2019). Dark patterns at scale: Findings from a crawl of 11K shopping websites. Proceedings of the ACM on Human-Computer Interaction, 3(CSCW), 1–32. DOI: <a href="<a href="https://doi.org/10.1145/3359183">10.1145/3359183</a>">https://doi.org/10.1145/3359183">10.1145/3359183</a></a></li>
+<li>Sin, Ray, Harris, Ted, Nilsson, Simon, and Beck, Talia (2025). Dark patterns in online shopping: Do they work and can nudges help mitigate impulse buying? Behavioural Public Policy, 9(1), 61–87（オンライン公開2022）. DOI: <a href="<a href="https://doi.org/10.1017/bpp.2022.11">10.1017/bpp.2022.11</a>">https://doi.org/10.1017/bpp.2022.11">10.1017/bpp.2022.11</a></a></li>
+<li>Sugden, Robert, Wang, Mengjie, and Zizzo, Daniel John (2019). Take it or leave it: Experimental evidence on the effect of time-limited offers on consumer behaviour. Journal of Economic Behavior &amp; Organization, 168, 1–23. DOI: <a href="<a href="https://doi.org/10.1016/j.jebo.2019.09.008">10.1016/j.jebo.2019.09.008</a>">https://doi.org/10.1016/j.jebo.2019.09.008">10.1016/j.jebo.2019.09.008</a></a></li>
+<li>Tiemessen, Jelmer, Schraffenberger, Hanna, and Acar, Gunes (2023). The time is ticking: The effect of limited time discounts on consumers&#x27; buying behavior and experience. In Extended Abstracts of the 2023 CHI Conference on Human Factors in Computing Systems (CHI EA &#x27;23), 1–11. ACM. DOI: <a href="<a href="https://doi.org/10.1145/3544549.3585735">10.1145/3544549.3585735</a>">https://doi.org/10.1145/3544549.3585735">10.1145/3544549.3585735</a></a></li>
+<li>Tuncer, Reha, Sergeeva, Anastasia, Bongard-Blanchy, Kerstin, Distler, Verena, Doublet, Sophie, and Koenig, Vincent (2024). Running out of time(rs): Effects of scarcity cues on perceived task load, perceived benevolence and user experience on e-commerce sites. Behaviour &amp; Information Technology, 43(11), 2281–2299（オンライン公開2023）. DOI: <a href="<a href="https://doi.org/10.1080/0144929X.2023.2242966">10.1080/0144929X.2023.2242966</a>">https://doi.org/10.1080/0144929X.2023.2242966">10.1080/0144929X.2023.2242966</a></a></li>
+<li>Worchel, Stephen, Lee, Jerry, and Adewole, Akanbi (1975). Effects of supply and demand on ratings of object value. Journal of Personality and Social Psychology, 32(5), 906–914. DOI: <a href="<a href="https://doi.org/10.1037/0022-3514.32.5.906">10.1037/0022-3514.32.5.906</a>">https://doi.org/10.1037/0022-3514.32.5.906">10.1037/0022-3514.32.5.906</a></a></li>
+<li>消費者庁（2019）．チケット転売の仲介サイト「viagogo」に関する注意喚起（令和元年9月13日，消費者安全法第38条第1項に基づく公表）．</li>
+</ol>
+</section>
+
+<footer>
+<p>© 2026 後藤晶．この草稿の転載はご遠慮ください．引用の際は出典として本頁を示してください．</p>
+<p><a href="../">後藤晶 ホームへ戻る</a></p>
+</footer>
+</div>
+</body>
+</html>
